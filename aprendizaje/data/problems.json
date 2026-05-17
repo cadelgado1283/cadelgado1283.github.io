@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PL-PROB01",
+    "title": "Producción de mesas y sillas",
+    "theme": "Formulación",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Producción de mesas y sillas: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB02",
+    "title": "Mezcla de jugos",
+    "theme": "Formulación",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Mezcla de jugos: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB03",
+    "title": "Dieta de bajo costo",
+    "theme": "Formulación",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Dieta de bajo costo: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB04",
+    "title": "Publicidad local",
+    "theme": "Formulación",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Publicidad local: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB05",
+    "title": "Producción con horas limitadas",
+    "theme": "Formulación",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Producción con horas limitadas: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB06",
+    "title": "Dos productos y dos recursos",
+    "theme": "Gráfico",
+    "difficulty": "Básico",
+    "method": "Gráfico",
+    "statement": "Dos productos y dos recursos: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB07",
+    "title": "Maximización con demanda máxima",
+    "theme": "Gráfico",
+    "difficulty": "Básico",
+    "method": "Gráfico",
+    "statement": "Maximización con demanda máxima: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB08",
+    "title": "Minimización con requisitos mínimos",
+    "theme": "Gráfico",
+    "difficulty": "Intermedio",
+    "method": "Gráfico",
+    "statement": "Minimización con requisitos mínimos: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB09",
+    "title": "Múltiples soluciones óptimas",
+    "theme": "Gráfico",
+    "difficulty": "Intermedio",
+    "method": "Gráfico",
+    "statement": "Múltiples soluciones óptimas: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB10",
+    "title": "Región no factible",
+    "theme": "Gráfico",
+    "difficulty": "Avanzado",
+    "method": "Gráfico",
+    "statement": "Región no factible: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB11",
+    "title": "Simplex con dos variables",
+    "theme": "Simplex",
+    "difficulty": "Básico",
+    "method": "Simplex",
+    "statement": "Simplex con dos variables: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB12",
+    "title": "Tres restricciones de capacidad",
+    "theme": "Simplex",
+    "difficulty": "Básico",
+    "method": "Simplex",
+    "statement": "Tres restricciones de capacidad: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB13",
+    "title": "Restricción tipo mayor o igual",
+    "theme": "Simplex",
+    "difficulty": "Intermedio",
+    "method": "Simplex",
+    "statement": "Restricción tipo mayor o igual: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB14",
+    "title": "Método de la M grande",
+    "theme": "Simplex",
+    "difficulty": "Intermedio",
+    "method": "Simplex",
+    "statement": "Método de la M grande: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB15",
+    "title": "Degeneración",
+    "theme": "Simplex",
+    "difficulty": "Avanzado",
+    "method": "Simplex",
+    "statement": "Degeneración: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB16",
+    "title": "Configuración de producción",
+    "theme": "Solver",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Configuración de producción: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB17",
+    "title": "Mezcla de fertilizantes",
+    "theme": "Solver",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Mezcla de fertilizantes: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB18",
+    "title": "Planeación de turnos",
+    "theme": "Solver",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Planeación de turnos: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB19",
+    "title": "Distribución a mercados",
+    "theme": "Solver",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Distribución a mercados: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB20",
+    "title": "Planeación multiperiodo",
+    "theme": "Solver",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Planeación multiperiodo: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB21",
+    "title": "Producción con PuLP",
+    "theme": "Python",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Producción con PuLP: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB22",
+    "title": "Dieta con PuLP",
+    "theme": "Python",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Dieta con PuLP: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB23",
+    "title": "Transporte con PuLP",
+    "theme": "Python",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Transporte con PuLP: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB24",
+    "title": "Cartera con restricciones",
+    "theme": "Python",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Cartera con restricciones: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB25",
+    "title": "Validación automática",
+    "theme": "Python",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Validación automática: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB26",
+    "title": "Precio sombra de capacidad",
+    "theme": "Sensibilidad",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Precio sombra de capacidad: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB27",
+    "title": "Costo reducido",
+    "theme": "Sensibilidad",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Costo reducido: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB28",
+    "title": "Cambio en utilidad",
+    "theme": "Sensibilidad",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Cambio en utilidad: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB29",
+    "title": "Cambio en disponibilidad",
+    "theme": "Sensibilidad",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Cambio en disponibilidad: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB30",
+    "title": "Degeneración y sensibilidad",
+    "theme": "Sensibilidad",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Degeneración y sensibilidad: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB31",
+    "title": "Restaurante universitario",
+    "theme": "Aplicado",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Restaurante universitario: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB32",
+    "title": "Producción de camisetas",
+    "theme": "Aplicado",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Producción de camisetas: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB33",
+    "title": "Mezcla de cafés",
+    "theme": "Aplicado",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Mezcla de cafés: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB34",
+    "title": "Distribución de medicamentos",
+    "theme": "Aplicado",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Distribución de medicamentos: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB35",
+    "title": "Plan de medios digitales",
+    "theme": "Aplicado",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Plan de medios digitales: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB36",
+    "title": "Inversión con riesgo máximo",
+    "theme": "Aplicado",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Inversión con riesgo máximo: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB37",
+    "title": "Planeación de enfermeros",
+    "theme": "Aplicado",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Planeación de enfermeros: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB38",
+    "title": "Corte de láminas",
+    "theme": "Aplicado",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Corte de láminas: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB39",
+    "title": "Abastecimiento multiperiodo",
+    "theme": "Aplicado",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Abastecimiento multiperiodo: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB40",
+    "title": "Producción con inventario",
+    "theme": "Aplicado",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Producción con inventario: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB41",
+    "title": "Caso fábrica de muebles",
+    "theme": "Caso",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Caso fábrica de muebles: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB42",
+    "title": "Caso dieta institucional",
+    "theme": "Caso",
+    "difficulty": "Básico",
+    "method": "Solver/Python",
+    "statement": "Caso dieta institucional: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB43",
+    "title": "Caso transporte regional",
+    "theme": "Caso",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Caso transporte regional: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB44",
+    "title": "Caso asignación de presupuesto",
+    "theme": "Caso",
+    "difficulty": "Intermedio",
+    "method": "Solver/Python",
+    "statement": "Caso asignación de presupuesto: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  },
+  {
+    "id": "PL-PROB45",
+    "title": "Caso planeación de operaciones",
+    "theme": "Caso",
+    "difficulty": "Avanzado",
+    "method": "Solver/Python",
+    "statement": "Caso planeación de operaciones: formule y/o resuelva un modelo de programación lineal con datos completos provistos por el docente. Incluya variables, función objetivo, restricciones, dominio, solución e interpretación gerencial.",
+    "hint": "Empiece por identificar decisiones, recursos limitados, objetivo y unidades de medida."
+  }
+]
