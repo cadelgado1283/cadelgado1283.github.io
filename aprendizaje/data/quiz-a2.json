@@ -1,0 +1,128 @@
+{
+  "title": "Quiz A2: Método gráfico",
+  "description": "Región factible, vértices, evaluación de la función objetivo y casos especiales.",
+  "questions": [
+    {
+      "type": "multiple",
+      "question": "El método gráfico se aplica directamente cuando el modelo tiene:",
+      "options": [
+        "Dos variables de decisión",
+        "Cualquier número de variables",
+        "Solo restricciones de igualdad",
+        "Variables binarias exclusivamente"
+      ],
+      "answer": 0,
+      "feedback": "Se representa en el plano cartesiano, por eso requiere dos variables para su aplicación directa."
+    },
+    {
+      "type": "multiple",
+      "question": "La solución óptima de un PL con región factible acotada se encuentra en:",
+      "options": [
+        "Cualquier punto interior",
+        "Al menos un vértice de la región factible",
+        "El origen siempre",
+        "La restricción con mayor pendiente"
+      ],
+      "answer": 1,
+      "feedback": "En PL, si existe óptimo finito, hay al menos un vértice óptimo."
+    },
+    {
+      "type": "numeric",
+      "question": "Para la recta 2x + y = 10, si x=0, ¿cuánto vale y?",
+      "answer": 10,
+      "feedback": "Al hacer x=0 queda y=10."
+    },
+    {
+      "type": "numeric",
+      "question": "Para la recta 2x + y = 10, si y=0, ¿cuánto vale x?",
+      "answer": 5,
+      "feedback": "Al hacer y=0 queda 2x=10, entonces x=5."
+    },
+    {
+      "type": "truefalse",
+      "question": "Una restricción redundante no cambia la región factible.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 0,
+      "feedback": "Es redundante porque ya está implícita por otras restricciones."
+    },
+    {
+      "type": "multiple",
+      "question": "Si dos vértices adyacentes tienen el mismo valor óptimo y la FO es paralela al borde entre ellos, el modelo tiene:",
+      "options": [
+        "Solución no factible",
+        "Soluciones óptimas múltiples",
+        "Modelo no acotado",
+        "Error en las unidades"
+      ],
+      "answer": 1,
+      "feedback": "Todo el segmento entre esos vértices también es óptimo."
+    },
+    {
+      "type": "multiple",
+      "question": "Un modelo es no factible cuando:",
+      "options": [
+        "La región factible está vacía",
+        "La función objetivo vale cero",
+        "Hay más de dos restricciones",
+        "El origen es factible"
+      ],
+      "answer": 0,
+      "feedback": "No existe ningún punto que satisfaga simultáneamente todas las restricciones."
+    },
+    {
+      "type": "multiple",
+      "question": "Un modelo de maximización es no acotado si:",
+      "options": [
+        "La FO puede crecer indefinidamente dentro de la región factible",
+        "Todas las variables son cero",
+        "Hay muchas restricciones",
+        "La región factible es un triángulo"
+      ],
+      "answer": 0,
+      "feedback": "La ausencia de cota superior impide obtener un valor óptimo finito."
+    },
+    {
+      "type": "numeric",
+      "question": "Evalúa Z=6x+4y en el punto (3,5).",
+      "answer": 38,
+      "feedback": "Z=6(3)+4(5)=18+20=38."
+    },
+    {
+      "type": "multiple",
+      "question": "Para graficar x + y ≤ 20, el lado factible se identifica probando:",
+      "options": [
+        "Un punto como (0,0)",
+        "El precio sombra",
+        "La variable artificial",
+        "El valor de Z únicamente"
+      ],
+      "answer": 0,
+      "feedback": "Se evalúa un punto de prueba para decidir qué semiplano cumple la desigualdad."
+    },
+    {
+      "type": "truefalse",
+      "question": "En minimización, también se evalúan vértices de la región factible.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 0,
+      "feedback": "La regla de búsqueda en vértices aplica tanto a maximización como a minimización."
+    },
+    {
+      "type": "multiple",
+      "question": "Si la región factible es una línea o segmento, el modelo puede:",
+      "options": [
+        "Ser factible con infinitos puntos factibles",
+        "Ser automáticamente no factible",
+        "No tener función objetivo",
+        "No necesitar variables"
+      ],
+      "answer": 0,
+      "feedback": "Una región factible puede ser de dimensión menor y aun así contener soluciones factibles."
+    }
+  ]
+}

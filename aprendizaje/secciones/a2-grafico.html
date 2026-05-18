@@ -1,0 +1,211 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A2. Solución por método gráfico</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container"><h1>A2. Solución por método gráfico</h1><nav class="section-nav" aria-label="Submenú de secciones"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav><p class="muted"><strong>Competencia:</strong> Resolver modelos de dos variables mediante región factible, vértices y evaluación de la función objetivo.</p><section class="learning-block"><h2>Guía de aprendizaje</h2><ul class="step-list"><li>Usar el método gráfico solo cuando existan dos variables de decisión.</li><li>Convertir cada restricción en recta para encontrar interceptos.</li><li>Determinar el semiplano factible con un punto de prueba.</li><li>Identificar todos los vértices de la región factible.</li><li>Evaluar la función objetivo en cada vértice.</li><li>Reconocer casos especiales: no factible, no acotado y múltiples óptimos.</li></ul></section><section class="learning-block"><h2>Buenas prácticas y errores comunes</h2><ul class="step-list"><li>Dibujar con escala coherente.</li><li>No evaluar puntos fuera de la región factible.</li><li>En minimización con restricciones >=, revisar que la región suele quedar alejada del origen.</li><li>Si la FO es paralela a una frontera activa, puede haber infinitas soluciones óptimas.</li></ul></section><section class="learning-block"><h2>10 ejemplos desarrollados</h2><p>Todos los ejemplos de esta sección incluyen planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación.</p><ol class="toc-list"><li><a href="#PL-SEC2-EJ01">PL-SEC2-EJ01 — Maximización con dos restricciones</a></li><li><a href="#PL-SEC2-EJ02">PL-SEC2-EJ02 — Minimización acotada de dieta</a></li><li><a href="#PL-SEC2-EJ03">PL-SEC2-EJ03 — Restricción redundante</a></li><li><a href="#PL-SEC2-EJ04">PL-SEC2-EJ04 — Múltiples óptimos</a></li><li><a href="#PL-SEC2-EJ05">PL-SEC2-EJ05 — Modelo no factible</a></li><li><a href="#PL-SEC2-EJ06">PL-SEC2-EJ06 — Modelo no acotado</a></li><li><a href="#PL-SEC2-EJ07">PL-SEC2-EJ07 — Mezcla con dos recursos</a></li><li><a href="#PL-SEC2-EJ08">PL-SEC2-EJ08 — Publicidad en dos medios</a></li><li><a href="#PL-SEC2-EJ09">PL-SEC2-EJ09 — Dieta con dos alimentos</a></li><li><a href="#PL-SEC2-EJ10">PL-SEC2-EJ10 — Producción con demanda mínima</a></li></ol></section><article class="example-detail" id="PL-SEC2-EJ01"><span class="badge">PL-SEC2-EJ01</span><h3>Maximización con dos restricciones</h3>
+<h4>Planteamiento</h4>
+<p>Una fábrica produce A y B. Cada A deja 40 y cada B deja 30. A usa 2 h de máquina y 1 h de ensamble; B usa 1 h de máquina y 1 h de ensamble. Hay 100 h de máquina y 80 h de ensamble.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Producto</th><th>Utilidad</th><th>Máquina</th><th>Ensamble</th></tr></thead><tbody><tr><td>A</td><td>40</td><td>2</td><td>1</td></tr><tr><td>B</td><td>30</td><td>1</td><td>1</td></tr><tr><td>Disponibilidad</td><td>—</td><td>100</td><td>80</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = unidades de A; y = unidades de B.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 40x + 30y</div>
+<h4>Restricciones</h4>
+<div class="math">2x + y &lt;= 100<br>x + y &lt;= 80<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Se dibujan las rectas, se identifica la región factible y se evalúan los vértices.</p>
+<h4>Solución</h4>
+<div class="math">Vértices: (0,0), (50,0), (20,60), (0,80). Valores Z: 0, 2000, 2600, 2400. Óptimo: x=20, y=60, Z=2600.</div>
+<h4>Interpretación</h4>
+<p>La mezcla óptima usa completamente máquina y ensamble.</p>
+<h4>Verificación</h4>
+<p>2(20)+60=100; 20+60=80.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ02"><span class="badge">PL-SEC2-EJ02</span><h3>Minimización acotada de dieta</h3>
+<h4>Planteamiento</h4>
+<p>Se combinan dos alimentos para alcanzar proteína y calorías mínimas al menor costo.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Alimento</th><th>Costo</th><th>Proteína</th><th>Calorías</th></tr></thead><tbody><tr><td>A</td><td>2</td><td>3</td><td>100</td></tr><tr><td>B</td><td>3</td><td>2</td><td>200</td></tr><tr><td>Mínimo</td><td>—</td><td>18</td><td>900</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = porciones de A; y = porciones de B.</p>
+<h4>Función objetivo</h4>
+<div class="math">Min C = 2x + 3y</div>
+<h4>Restricciones</h4>
+<div class="math">3x + 2y &gt;= 18<br>100x + 200y &gt;= 900<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Para minimización con >=, la región factible queda por encima de las rectas. Se evalúan los vértices factibles más cercanos al origen.</p>
+<h4>Solución</h4>
+<div class="math">Intersección: 3x+2y=18 y x+2y=9. Restando: 2x=9, x=4.5, y=2.25. Costo=15.75. Vértices de ejes factibles: (9,0) costo 18; (0,9) costo 27. Óptimo: (4.5,2.25).</div>
+<h4>Interpretación</h4>
+<p>La combinación mixta es más barata que usar un solo alimento.</p>
+<h4>Verificación</h4>
+<p>Proteína=18; calorías=900.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ03"><span class="badge">PL-SEC2-EJ03</span><h3>Restricción redundante</h3>
+<h4>Planteamiento</h4>
+<p>Una operación tiene tres restricciones, pero una no cambia la región factible.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Restricción</th><th>Forma</th></tr></thead><tbody><tr><td>R1</td><td>x + y <= 10</td></tr><tr><td>R2</td><td>2x + 2y <= 24</td></tr><tr><td>R3</td><td>x <= 7</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x,y = cantidades a producir.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 5x + 4y</div>
+<h4>Restricciones</h4>
+<div class="math">x + y &lt;= 10<br>2x + 2y &lt;= 24<br>x &lt;= 7<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>R2 equivale a x+y<=12, por tanto es menos estricta que R1 y resulta redundante.</p>
+<h4>Solución</h4>
+<div class="math">Vértices relevantes: (0,0), (7,0), (7,3), (0,10). Valores: 0,35,47,40. Óptimo: x=7,y=3,Z=47.</div>
+<h4>Interpretación</h4>
+<p>La restricción redundante puede omitirse sin cambiar la solución.</p>
+<h4>Verificación</h4>
+<p>R2: 2(7)+2(3)=20<=24.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ04"><span class="badge">PL-SEC2-EJ04</span><h3>Múltiples óptimos</h3>
+<h4>Planteamiento</h4>
+<p>Un modelo presenta una función objetivo paralela a una frontera activa.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Valor</th></tr></thead><tbody><tr><td>Utilidad</td><td>Z=2x+2y</td></tr><tr><td>Capacidad</td><td>x+y<=10</td></tr><tr><td>Límite x</td><td>x<=8</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x,y = unidades de dos productos sustitutos.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 2x + 2y</div>
+<h4>Restricciones</h4>
+<div class="math">x + y &lt;= 10<br>x &lt;= 8<br>y &lt;= 9<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>La recta objetivo 2x+2y es paralela a x+y=10.</p>
+<h4>Solución</h4>
+<div class="math">Todo punto factible sobre el segmento x+y=10 con 1&lt;=x&lt;=8 es óptimo. Por ejemplo (8,2), (5,5), (1,9). Z=20.</div>
+<h4>Interpretación</h4>
+<p>La empresa tiene flexibilidad operativa sin sacrificar utilidad.</p>
+<h4>Verificación</h4>
+<p>Todos los puntos cumplen x+y=10 y producen Z=20.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ05"><span class="badge">PL-SEC2-EJ05</span><h3>Modelo no factible</h3>
+<h4>Planteamiento</h4>
+<p>Una empresa exige producción mínima total mayor que la capacidad máxima permitida.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Condición</th><th>Restricción</th></tr></thead><tbody><tr><td>Demanda mínima</td><td>x+y>=50</td></tr><tr><td>Capacidad</td><td>x+y<=30</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x,y = unidades de dos productos.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 10x + 8y</div>
+<h4>Restricciones</h4>
+<div class="math">x + y &gt;= 50<br>x + y &lt;= 30<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Se grafican ambas semirrectas; no existe intersección entre x+y>=50 y x+y<=30.</p>
+<h4>Solución</h4>
+<p>No hay región factible; el problema es infeasible.</p>
+<h4>Interpretación</h4>
+<p>Las metas son incompatibles con la capacidad disponible.</p>
+<h4>Verificación</h4>
+<p>Ningún par (x,y) puede sumar simultáneamente al menos 50 y máximo 30.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ06"><span class="badge">PL-SEC2-EJ06</span><h3>Modelo no acotado</h3>
+<h4>Planteamiento</h4>
+<p>Un modelo permite aumentar indefinidamente la función objetivo porque no hay restricción superior suficiente.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Valor</th></tr></thead><tbody><tr><td>FO</td><td>Max Z=x+y</td></tr><tr><td>Restricción</td><td>x-y>=2</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x,y = variables de decisión.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = x + y</div>
+<h4>Restricciones</h4>
+<div class="math">x - y &gt;= 2<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>La región factible se extiende indefinidamente hacia valores grandes de x e y.</p>
+<h4>Solución</h4>
+<div class="math">No existe valor máximo finito. Por ejemplo, si y=t y x=t+2, Z=2t+2, que crece sin límite.</div>
+<h4>Interpretación</h4>
+<p>Falta una restricción de capacidad o presupuesto que limite el crecimiento.</p>
+<h4>Verificación</h4>
+<p>Para cualquier t>=0, (t+2,t) es factible.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ07"><span class="badge">PL-SEC2-EJ07</span><h3>Mezcla con dos recursos</h3>
+<h4>Planteamiento</h4>
+<p>Se producen dos mezclas químicas con disponibilidad de materia prima A y B.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Mezcla</th><th>Margen</th><th>Recurso A</th><th>Recurso B</th></tr></thead><tbody><tr><td>M1</td><td>70</td><td>3</td><td>2</td></tr><tr><td>M2</td><td>60</td><td>2</td><td>4</td></tr><tr><td>Disponible</td><td>—</td><td>120</td><td>160</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = lotes M1; y = lotes M2.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 70x + 60y</div>
+<h4>Restricciones</h4>
+<div class="math">3x + 2y &lt;= 120<br>2x + 4y &lt;= 160<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Intersección de recursos: resolver ambas restricciones como igualdades.</p>
+<h4>Solución</h4>
+<div class="math">3x+2y=120; 2x+4y=160. De la primera y segunda: x=20, y=30. Otros vértices: (40,0), (0,40). Z: 2800, 2400, 3200. Óptimo: (20,30), Z=3200.</div>
+<h4>Interpretación</h4>
+<p>Conviene producir ambas mezclas usando plenamente los dos recursos.</p>
+<h4>Verificación</h4>
+<p>A=120, B=160.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ08"><span class="badge">PL-SEC2-EJ08</span><h3>Publicidad en dos medios</h3>
+<h4>Planteamiento</h4>
+<p>Una campaña usa radio y redes. Se maximiza alcance con presupuesto y mínimo de radio.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Medio</th><th>Alcance</th><th>Costo</th></tr></thead><tbody><tr><td>Radio</td><td>5000</td><td>800</td></tr><tr><td>Redes</td><td>3000</td><td>400</td></tr><tr><td>Presupuesto</td><td>—</td><td>8000</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = anuncios radio; y = anuncios redes.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max A = 5000x + 3000y</div>
+<h4>Restricciones</h4>
+<div class="math">800x + 400y &lt;= 8000<br>x &gt;= 2<br>y &lt;= 12<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Se reescribe presupuesto como 2x+y<=20 y se evalúan vértices factibles.</p>
+<h4>Solución</h4>
+<div class="math">Vértices: (2,0), (10,0), (4,12), (2,12). Alcances: 10000, 50000, 56000, 46000. Óptimo: x=4,y=12, alcance=56000.</div>
+<h4>Interpretación</h4>
+<p>Se usa el máximo de redes y radio adicional hasta agotar presupuesto.</p>
+<h4>Verificación</h4>
+<p>Costo=4*800+12*400=8000.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ09"><span class="badge">PL-SEC2-EJ09</span><h3>Dieta con dos alimentos</h3>
+<h4>Planteamiento</h4>
+<p>Una dieta usa avena y huevo para cumplir proteína y energía al mínimo costo.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Alimento</th><th>Costo</th><th>Proteína</th><th>Energía</th></tr></thead><tbody><tr><td>Avena</td><td>1</td><td>5</td><td>150</td></tr><tr><td>Huevo</td><td>2</td><td>12</td><td>100</td></tr><tr><td>Mínimo</td><td>—</td><td>36</td><td>600</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = porciones de avena; y = porciones de huevo.</p>
+<h4>Función objetivo</h4>
+<div class="math">Min C = x + 2y</div>
+<h4>Restricciones</h4>
+<div class="math">5x + 12y &gt;= 36<br>150x + 100y &gt;= 600<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>Evaluar vértices factibles de la región superior.</p>
+<h4>Solución</h4>
+<div class="math">Intersección: 5x+12y=36 y 3x+2y=12. De la segunda x=4-2y/3; sustituyendo: 20 -10y/3 +12y=36 =&gt; 26y/3=16 =&gt; y=1.846, x=2.769. Costo=6.461. Ejes: (7.2,0) costo 7.2; (0,6) costo 12. Óptimo intersección.</div>
+<h4>Interpretación</h4>
+<p>La combinación aprovecha avena barata para energía y huevo para proteína.</p>
+<h4>Verificación</h4>
+<p>Proteína y energía cumplen exactamente.</p>
+</article><article class="example-detail" id="PL-SEC2-EJ10"><span class="badge">PL-SEC2-EJ10</span><h3>Producción con demanda mínima</h3>
+<h4>Planteamiento</h4>
+<p>Una empresa debe fabricar al menos cierta cantidad total por contrato, pero tiene recursos limitados.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Producto</th><th>Utilidad</th><th>Horas</th></tr></thead><tbody><tr><td>A</td><td>20</td><td>2</td></tr><tr><td>B</td><td>25</td><td>3</td></tr><tr><td>Capacidad</td><td>—</td><td>90</td></tr><tr><td>Demanda mínima total</td><td>—</td><td>>=30</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>x = unidades A; y = unidades B.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z = 20x + 25y</div>
+<h4>Restricciones</h4>
+<div class="math">2x + 3y &lt;= 90<br>x + y &gt;= 30<br>x &lt;= 25<br>x,y &gt;= 0</div>
+<h4>Dominio</h4>
+<p>x,y >= 0.</p>
+<h4>Método / procedimiento</h4>
+<p>La región factible está entre demanda mínima, capacidad y límite de A.</p>
+<h4>Solución</h4>
+<div class="math">Vértices factibles relevantes: (25,5), (25,13.333), (0,30). Z: 625, 833.33, 750. Óptimo: x=25,y=13.333,Z=833.33.</div>
+<h4>Interpretación</h4>
+<p>La capacidad se usa totalmente y se produce el máximo permitido de A.</p>
+<h4>Verificación</h4>
+<p>Horas=2(25)+3(13.333)=90.</p>
+</article></main></body></html>

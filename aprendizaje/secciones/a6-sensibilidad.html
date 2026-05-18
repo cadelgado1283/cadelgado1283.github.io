@@ -1,0 +1,211 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A6. Análisis de sensibilidad en Solver y Python</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container"><h1>A6. Análisis de sensibilidad en Solver y Python</h1><nav class="section-nav" aria-label="Submenú de secciones"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav><p class="muted"><strong>Competencia:</strong> Interpretar precios sombra, costos reducidos y rangos para tomar decisiones gerenciales bajo cambios marginales.</p><section class="learning-block"><h2>Guía de aprendizaje</h2><ul class="step-list"><li>Diferenciar sensibilidad de variables y restricciones.</li><li>Interpretar precio sombra solo dentro del rango permitido.</li><li>Leer costos reducidos para variables no básicas.</li><li>Distinguir restricciones activas y no activas.</li><li>Comparar reporte de Solver con salidas duales en Python cuando estén disponibles.</li><li>Resolver nuevamente si el cambio excede los rangos.</li></ul></section><section class="learning-block"><h2>Buenas prácticas y errores comunes</h2><ul class="step-list"><li>No aplicar precios sombra fuera del rango de factibilidad.</li><li>No interpretar costos reducidos como pérdidas reales.</li><li>Cuidado con degeneración y óptimos alternativos.</li><li>En modelos enteros, el reporte clásico de sensibilidad no aplica igual.</li></ul></section><section class="learning-block"><h2>10 ejemplos desarrollados</h2><p>Todos los ejemplos de esta sección incluyen planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación.</p><ol class="toc-list"><li><a href="#PL-SEC6-EJ01">PL-SEC6-EJ01 — Precio sombra de capacidad</a></li><li><a href="#PL-SEC6-EJ02">PL-SEC6-EJ02 — Rango de factibilidad</a></li><li><a href="#PL-SEC6-EJ03">PL-SEC6-EJ03 — Rango de optimalidad</a></li><li><a href="#PL-SEC6-EJ04">PL-SEC6-EJ04 — Costo reducido</a></li><li><a href="#PL-SEC6-EJ05">PL-SEC6-EJ05 — Recurso no activo</a></li><li><a href="#PL-SEC6-EJ06">PL-SEC6-EJ06 — Cambio simultáneo</a></li><li><a href="#PL-SEC6-EJ07">PL-SEC6-EJ07 — Solver vs Python</a></li><li><a href="#PL-SEC6-EJ08">PL-SEC6-EJ08 — Degeneración</a></li><li><a href="#PL-SEC6-EJ09">PL-SEC6-EJ09 — Nuevo producto</a></li><li><a href="#PL-SEC6-EJ10">PL-SEC6-EJ10 — Análisis gerencial</a></li></ol></section><article class="example-detail" id="PL-SEC6-EJ01"><span class="badge">PL-SEC6-EJ01</span><h3>Precio sombra de capacidad</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Restricción de horas de máquina activa con precio sombra 12.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Restricción de horas de máquina activa con precio sombra 12</td></tr><tr><td>Conclusión central</td><td>Una hora adicional aumenta Z en 12 dentro del rango</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Una hora adicional aumenta Z en 12 dentro del rango.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ02"><span class="badge">PL-SEC6-EJ02</span><h3>Rango de factibilidad</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Capacidad actual 100, aumento permitido 20, disminución permitida 15.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Capacidad actual 100, aumento permitido 20, disminución permitida 15</td></tr><tr><td>Conclusión central</td><td>Precio sombra válido para RHS entre 85 y 120</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Precio sombra válido para RHS entre 85 y 120.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ03"><span class="badge">PL-SEC6-EJ03</span><h3>Rango de optimalidad</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Coeficiente de producto A actual 40, aumento permitido 10, disminución 5.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Coeficiente de producto A actual 40, aumento permitido 10, disminución 5</td></tr><tr><td>Conclusión central</td><td>La base óptima se mantiene si cA está entre 35 y 50</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: La base óptima se mantiene si cA está entre 35 y 50.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ04"><span class="badge">PL-SEC6-EJ04</span><h3>Costo reducido</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Producto no producido con costo reducido -4 en maximización.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Producto no producido con costo reducido -4 en maximización</td></tr><tr><td>Conclusión central</td><td>Su utilidad debe mejorar al menos 4 para entrar</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Su utilidad debe mejorar al menos 4 para entrar.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ05"><span class="badge">PL-SEC6-EJ05</span><h3>Recurso no activo</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Holgura positiva y precio sombra 0.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Holgura positiva y precio sombra 0</td></tr><tr><td>Conclusión central</td><td>Aumentar ese recurso no mejora el objetivo</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Aumentar ese recurso no mejora el objetivo.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ06"><span class="badge">PL-SEC6-EJ06</span><h3>Cambio simultáneo</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Cambian dos RHS dentro de rangos individuales.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Cambian dos RHS dentro de rangos individuales</td></tr><tr><td>Conclusión central</td><td>Usar regla del 100% como aproximación</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Usar regla del 100% como aproximación.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ07"><span class="badge">PL-SEC6-EJ07</span><h3>Solver vs Python</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Solver da rangos; PuLP puede dar duales pero no todos los rangos.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Solver da rangos; PuLP puede dar duales pero no todos los rangos</td></tr><tr><td>Conclusión central</td><td>Comparar interpretación, no solo números</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Comparar interpretación, no solo números.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ08"><span class="badge">PL-SEC6-EJ08</span><h3>Degeneración</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Restricción activa con precio sombra potencialmente ambiguo.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Restricción activa con precio sombra potencialmente ambiguo</td></tr><tr><td>Conclusión central</td><td>Interpretar con cuidado y validar escenarios</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Interpretar con cuidado y validar escenarios.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ09"><span class="badge">PL-SEC6-EJ09</span><h3>Nuevo producto</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Usar costo reducido para decidir si incorporar producto.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Usar costo reducido para decidir si incorporar producto</td></tr><tr><td>Conclusión central</td><td>Entra si su contribución supera consumo valorizado de recursos</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Entra si su contribución supera consumo valorizado de recursos.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article><article class="example-detail" id="PL-SEC6-EJ10"><span class="badge">PL-SEC6-EJ10</span><h3>Análisis gerencial</h3>
+<h4>Planteamiento</h4>
+<p>Caso de interpretación de sensibilidad: Evaluar comprar capacidad, cambiar precio o relajar demanda.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Indicador</th><th>Valor de referencia</th></tr></thead><tbody><tr><td>Situación</td><td>Evaluar comprar capacidad, cambiar precio o relajar demanda</td></tr><tr><td>Conclusión central</td><td>Decisión basada en impacto marginal y rango</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Variables de decisión del modelo óptimo original; las variables no básicas son aquellas con valor cero en la solución.</p>
+<h4>Función objetivo</h4>
+<p>La sensibilidad analiza cambios marginales en coeficientes de la función objetivo c o en lados derechos b, manteniendo la estructura lineal.</p>
+<h4>Restricciones</h4>
+<p>Se interpretan restricciones activas, holguras, precios sombra y rangos permitidos.</p>
+<h4>Dominio</h4>
+<p>El análisis es válido para el modelo lineal continuo y dentro de los rangos reportados.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Identificar solución óptima base.</li><li>Determinar restricciones activas y no activas.</li><li>Leer precio sombra y rango de factibilidad para RHS.</li><li>Leer costo reducido y rango de optimalidad para coeficientes.</li><li>Traducir el resultado a una decisión gerencial.</li><li>Si el cambio está fuera del rango, resolver nuevamente el modelo.</li></ul>
+<h4>Solución</h4>
+<p>Conclusión: Decisión basada en impacto marginal y rango.</p>
+<h4>Interpretación</h4>
+<p>La sensibilidad no reemplaza resolver escenarios grandes. Sirve para cambios marginales y decisiones rápidas dentro de intervalos válidos.</p>
+<h4>Verificación</h4>
+<p>Confirmar que el cambio propuesto permanece dentro del rango permitido; si no, correr nuevamente Solver o Python.</p>
+</article></main></body></html>
