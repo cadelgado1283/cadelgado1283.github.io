@@ -1,0 +1,128 @@
+{
+  "title": "Quiz A6: Análisis de sensibilidad",
+  "description": "Precios sombra, costos reducidos, rangos, restricciones activas y lectura gerencial.",
+  "questions": [
+    {
+      "type": "multiple",
+      "question": "El precio sombra de una restricción indica:",
+      "options": [
+        "Cambio marginal en la FO por una unidad adicional del recurso, dentro del rango válido",
+        "Costo histórico del recurso",
+        "Valor de la variable de decisión",
+        "Número de iteraciones simplex"
+      ],
+      "answer": 0,
+      "feedback": "El precio sombra es una medida marginal válida solo bajo ciertas condiciones y rangos."
+    },
+    {
+      "type": "truefalse",
+      "question": "Un precio sombra se interpreta sin importar cuánto cambie el lado derecho.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 1,
+      "feedback": "Solo es válido dentro del rango de factibilidad permitido por el reporte."
+    },
+    {
+      "type": "multiple",
+      "question": "Una restricción activa normalmente tiene:",
+      "options": [
+        "Holgura igual a cero",
+        "Costo reducido negativo siempre",
+        "Variable artificial positiva siempre",
+        "RHS igual a cero necesariamente"
+      ],
+      "answer": 0,
+      "feedback": "Activa significa que se cumple como igualdad en la solución óptima."
+    },
+    {
+      "type": "numeric",
+      "question": "Si el precio sombra es 12 y se agregan 5 unidades dentro del rango permitido, ¿cuánto aumenta Z?",
+      "answer": 60,
+      "feedback": "El cambio estimado es 12 × 5 = 60."
+    },
+    {
+      "type": "multiple",
+      "question": "El costo reducido de una variable no básica en maximización indica:",
+      "options": [
+        "Cuánto debe mejorar su coeficiente objetivo para que pueda entrar a la solución",
+        "La holgura de una restricción",
+        "La disponibilidad del recurso",
+        "El costo fijo del modelo"
+      ],
+      "answer": 0,
+      "feedback": "Mide la mejora necesaria en el coeficiente de la variable no básica."
+    },
+    {
+      "type": "truefalse",
+      "question": "Si una variable básica es positiva en el óptimo, su costo reducido suele ser cero.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 0,
+      "feedback": "En el óptimo, las variables básicas tienen costo reducido cero bajo la interpretación estándar."
+    },
+    {
+      "type": "multiple",
+      "question": "El rango de optimalidad se refiere principalmente a cambios en:",
+      "options": [
+        "Coeficientes de la función objetivo",
+        "Lados derechos de restricciones",
+        "Nombres de variables",
+        "Formato de celdas"
+      ],
+      "answer": 0,
+      "feedback": "Indica cuánto puede cambiar un coeficiente de la FO sin alterar la base óptima."
+    },
+    {
+      "type": "multiple",
+      "question": "El rango de factibilidad se refiere principalmente a cambios en:",
+      "options": [
+        "Disponibilidades o lados derechos de restricciones",
+        "Colores del gráfico",
+        "Nombres de hojas",
+        "Número de decimales"
+      ],
+      "answer": 0,
+      "feedback": "Analiza variaciones del RHS manteniendo la base óptima."
+    },
+    {
+      "type": "numeric",
+      "question": "Un recurso tiene RHS actual 80, aumento permisible 20 y disminución permisible 10. ¿Cuál es el límite inferior del rango?",
+      "answer": 70,
+      "feedback": "Límite inferior = 80 - 10 = 70."
+    },
+    {
+      "type": "numeric",
+      "question": "Con RHS actual 80 y aumento permisible 20, ¿cuál es el límite superior del rango?",
+      "answer": 100,
+      "feedback": "Límite superior = 80 + 20 = 100."
+    },
+    {
+      "type": "multiple",
+      "question": "Si una restricción tiene holgura positiva en un problema de maximización, su precio sombra usualmente es:",
+      "options": [
+        "Cero",
+        "Infinito",
+        "Negativo obligatorio",
+        "Igual al RHS"
+      ],
+      "answer": 0,
+      "feedback": "Un recurso sobrante no tiene valor marginal adicional en el óptimo, salvo casos especiales."
+    },
+    {
+      "type": "multiple",
+      "question": "Una advertencia importante en sensibilidad es que:",
+      "options": [
+        "Degeneración y cambios simultáneos pueden complicar la interpretación",
+        "Siempre se puede cambiar todo sin resolver de nuevo",
+        "Los precios sombra reemplazan la función objetivo",
+        "No se deben revisar unidades"
+      ],
+      "answer": 0,
+      "feedback": "La sensibilidad estándar es local y suele analizar cambios individuales dentro de rangos."
+    }
+  ]
+}
