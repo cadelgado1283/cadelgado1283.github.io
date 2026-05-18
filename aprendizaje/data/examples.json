@@ -1,0 +1,362 @@
+[
+  {
+    "id": "PL-SEC1-EJ01",
+    "section": "A1",
+    "title": "Producción de mesas y sillas",
+    "summary": "Ejemplo resuelto sobre producción de mesas y sillas con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ02",
+    "section": "A1",
+    "title": "Mezcla de alimentos balanceados",
+    "summary": "Ejemplo resuelto sobre mezcla de alimentos balanceados con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ03",
+    "section": "A1",
+    "title": "Dieta mínima",
+    "summary": "Ejemplo resuelto sobre dieta mínima con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ04",
+    "section": "A1",
+    "title": "Transporte simple",
+    "summary": "Ejemplo resuelto sobre transporte simple con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ05",
+    "section": "A1",
+    "title": "Asignación simple",
+    "summary": "Ejemplo resuelto sobre asignación simple con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ06",
+    "section": "A1",
+    "title": "Publicidad",
+    "summary": "Ejemplo resuelto sobre publicidad con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ07",
+    "section": "A1",
+    "title": "Cartera básica",
+    "summary": "Ejemplo resuelto sobre cartera básica con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ08",
+    "section": "A1",
+    "title": "Corte de rollos",
+    "summary": "Ejemplo resuelto sobre corte de rollos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ09",
+    "section": "A1",
+    "title": "Planeación de turnos",
+    "summary": "Ejemplo resuelto sobre planeación de turnos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC1-EJ10",
+    "section": "A1",
+    "title": "Localización simplificada",
+    "summary": "Ejemplo resuelto sobre localización simplificada con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ01",
+    "section": "A2",
+    "title": "Maximización con dos restricciones",
+    "summary": "Ejemplo resuelto sobre maximización con dos restricciones con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ02",
+    "section": "A2",
+    "title": "Minimización acotada",
+    "summary": "Ejemplo resuelto sobre minimización acotada con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ03",
+    "section": "A2",
+    "title": "Restricción redundante",
+    "summary": "Ejemplo resuelto sobre restricción redundante con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ04",
+    "section": "A2",
+    "title": "Múltiples óptimos",
+    "summary": "Ejemplo resuelto sobre múltiples óptimos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ05",
+    "section": "A2",
+    "title": "Modelo no factible",
+    "summary": "Ejemplo resuelto sobre modelo no factible con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ06",
+    "section": "A2",
+    "title": "Modelo no acotado",
+    "summary": "Ejemplo resuelto sobre modelo no acotado con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ07",
+    "section": "A2",
+    "title": "Mezcla con dos recursos",
+    "summary": "Ejemplo resuelto sobre mezcla con dos recursos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ08",
+    "section": "A2",
+    "title": "Publicidad en dos medios",
+    "summary": "Ejemplo resuelto sobre publicidad en dos medios con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ09",
+    "section": "A2",
+    "title": "Dieta con dos alimentos",
+    "summary": "Ejemplo resuelto sobre dieta con dos alimentos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC2-EJ10",
+    "section": "A2",
+    "title": "Demanda mínima",
+    "summary": "Ejemplo resuelto sobre demanda mínima con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ01",
+    "section": "A3",
+    "title": "Simplex básico",
+    "summary": "Ejemplo resuelto sobre simplex básico con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ02",
+    "section": "A3",
+    "title": "Tres restricciones",
+    "summary": "Ejemplo resuelto sobre tres restricciones con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ03",
+    "section": "A3",
+    "title": "Variables de holgura",
+    "summary": "Ejemplo resuelto sobre variables de holgura con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ04",
+    "section": "A3",
+    "title": "Restricción mayor o igual",
+    "summary": "Ejemplo resuelto sobre restricción mayor o igual con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ05",
+    "section": "A3",
+    "title": "M grande",
+    "summary": "Ejemplo resuelto sobre m grande con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ06",
+    "section": "A3",
+    "title": "Dos fases",
+    "summary": "Ejemplo resuelto sobre dos fases con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ07",
+    "section": "A3",
+    "title": "Degeneración",
+    "summary": "Ejemplo resuelto sobre degeneración con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ08",
+    "section": "A3",
+    "title": "Óptimos alternativos",
+    "summary": "Ejemplo resuelto sobre óptimos alternativos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ09",
+    "section": "A3",
+    "title": "Modelo no acotado",
+    "summary": "Ejemplo resuelto sobre modelo no acotado con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC3-EJ10",
+    "section": "A3",
+    "title": "Minimización convertida",
+    "summary": "Ejemplo resuelto sobre minimización convertida con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ01",
+    "section": "A4",
+    "title": "Producción en Solver",
+    "summary": "Ejemplo resuelto sobre producción en solver con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ02",
+    "section": "A4",
+    "title": "Mezcla de materias primas",
+    "summary": "Ejemplo resuelto sobre mezcla de materias primas con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ03",
+    "section": "A4",
+    "title": "Dieta en Solver",
+    "summary": "Ejemplo resuelto sobre dieta en solver con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ04",
+    "section": "A4",
+    "title": "Transporte simple",
+    "summary": "Ejemplo resuelto sobre transporte simple con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ05",
+    "section": "A4",
+    "title": "Publicidad con presupuesto",
+    "summary": "Ejemplo resuelto sobre publicidad con presupuesto con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ06",
+    "section": "A4",
+    "title": "Cartera de inversión",
+    "summary": "Ejemplo resuelto sobre cartera de inversión con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ07",
+    "section": "A4",
+    "title": "Planeación de turnos",
+    "summary": "Ejemplo resuelto sobre planeación de turnos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ08",
+    "section": "A4",
+    "title": "Inventario simplificado",
+    "summary": "Ejemplo resuelto sobre inventario simplificado con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ09",
+    "section": "A4",
+    "title": "Corte de materiales",
+    "summary": "Ejemplo resuelto sobre corte de materiales con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC4-EJ10",
+    "section": "A4",
+    "title": "Demanda mínima",
+    "summary": "Ejemplo resuelto sobre demanda mínima con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ01",
+    "section": "A5",
+    "title": "Producción con PuLP",
+    "summary": "Ejemplo resuelto sobre producción con pulp con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ02",
+    "section": "A5",
+    "title": "Dieta con PuLP",
+    "summary": "Ejemplo resuelto sobre dieta con pulp con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ03",
+    "section": "A5",
+    "title": "Mezcla de productos",
+    "summary": "Ejemplo resuelto sobre mezcla de productos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ04",
+    "section": "A5",
+    "title": "Transporte con PuLP",
+    "summary": "Ejemplo resuelto sobre transporte con pulp con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ05",
+    "section": "A5",
+    "title": "Publicidad",
+    "summary": "Ejemplo resuelto sobre publicidad con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ06",
+    "section": "A5",
+    "title": "Cartera básica",
+    "summary": "Ejemplo resuelto sobre cartera básica con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ07",
+    "section": "A5",
+    "title": "Planeación de turnos",
+    "summary": "Ejemplo resuelto sobre planeación de turnos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ08",
+    "section": "A5",
+    "title": "PuLP vs linprog",
+    "summary": "Ejemplo resuelto sobre pulp vs linprog con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ09",
+    "section": "A5",
+    "title": "Validación de restricciones",
+    "summary": "Ejemplo resuelto sobre validación de restricciones con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC5-EJ10",
+    "section": "A5",
+    "title": "Exportar a Excel",
+    "summary": "Ejemplo resuelto sobre exportar a excel con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ01",
+    "section": "A6",
+    "title": "Precios sombra",
+    "summary": "Ejemplo resuelto sobre precios sombra con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ02",
+    "section": "A6",
+    "title": "Rangos de optimalidad",
+    "summary": "Ejemplo resuelto sobre rangos de optimalidad con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ03",
+    "section": "A6",
+    "title": "Rangos de factibilidad",
+    "summary": "Ejemplo resuelto sobre rangos de factibilidad con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ04",
+    "section": "A6",
+    "title": "Costos reducidos",
+    "summary": "Ejemplo resuelto sobre costos reducidos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ05",
+    "section": "A6",
+    "title": "Mezcla de productos",
+    "summary": "Ejemplo resuelto sobre mezcla de productos con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ06",
+    "section": "A6",
+    "title": "Dieta",
+    "summary": "Ejemplo resuelto sobre dieta con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ07",
+    "section": "A6",
+    "title": "Transporte",
+    "summary": "Ejemplo resuelto sobre transporte con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ08",
+    "section": "A6",
+    "title": "Solver vs Python",
+    "summary": "Ejemplo resuelto sobre solver vs python con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ09",
+    "section": "A6",
+    "title": "Degeneración",
+    "summary": "Ejemplo resuelto sobre degeneración con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  },
+  {
+    "id": "PL-SEC6-EJ10",
+    "section": "A6",
+    "title": "Escenarios gerenciales",
+    "summary": "Ejemplo resuelto sobre escenarios gerenciales con planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación."
+  }
+]
