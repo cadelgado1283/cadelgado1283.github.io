@@ -1,0 +1,257 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A5. Resolución con Python</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container"><h1>A5. Resolución con Python</h1><nav class="section-nav" aria-label="Submenú de secciones"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav><p class="muted"><strong>Competencia:</strong> Implementar y validar modelos de PL con PuLP, usando scipy.optimize.linprog como alternativa.</p><section class="learning-block"><h2>Guía de aprendizaje</h2><ul class="step-list"><li>Instalar y cargar librerías.</li><li>Traducir el modelo matemático a objetos de Python.</li><li>Usar nombres claros para variables y restricciones.</li><li>Resolver e interpretar estado del solver.</li><li>Validar factibilidad y valor objetivo.</li><li>Automatizar escenarios y exportar resultados.</li></ul></section><section class="learning-block"><h2>Buenas prácticas y errores comunes</h2><ul class="step-list"><li>No programar antes de formular el modelo matemático.</li><li>Revisar el sentido: LpMaximize vs LpMinimize.</li><li>En linprog, recordar que por defecto minimiza.</li><li>Validar resultados con cálculos manuales o Solver en ejemplos pequeños.</li></ul></section><section class="learning-block"><h2>10 ejemplos desarrollados</h2><p>Todos los ejemplos de esta sección incluyen planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación.</p><ol class="toc-list"><li><a href="#PL-SEC5-EJ01">PL-SEC5-EJ01 — Producción básica con PuLP</a></li><li><a href="#PL-SEC5-EJ02">PL-SEC5-EJ02 — Dieta con PuLP</a></li><li><a href="#PL-SEC5-EJ03">PL-SEC5-EJ03 — Mezcla de productos</a></li><li><a href="#PL-SEC5-EJ04">PL-SEC5-EJ04 — Transporte simple</a></li><li><a href="#PL-SEC5-EJ05">PL-SEC5-EJ05 — Publicidad</a></li><li><a href="#PL-SEC5-EJ06">PL-SEC5-EJ06 — Cartera básica</a></li><li><a href="#PL-SEC5-EJ07">PL-SEC5-EJ07 — Planeación de turnos</a></li><li><a href="#PL-SEC5-EJ08">PL-SEC5-EJ08 — PuLP vs linprog</a></li><li><a href="#PL-SEC5-EJ09">PL-SEC5-EJ09 — Validación de restricciones</a></li><li><a href="#PL-SEC5-EJ10">PL-SEC5-EJ10 — Exportar resultados a Excel</a></li></ol></section><article class="example-detail" id="PL-SEC5-EJ01"><span class="badge">PL-SEC5-EJ01</span><h3>Producción básica con PuLP</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Maximización con dos productos y dos recursos.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>x1=20, x2=60, Z=2600</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: x1=20, x2=60, Z=2600.</div>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>import pulp as pl
+
+modelo = pl.LpProblem(&quot;modelo_PL&quot;, pl.LpMaximize)  # usar LpMinimize si aplica
+x1 = pl.LpVariable(&quot;x1&quot;, lowBound=0)
+x2 = pl.LpVariable(&quot;x2&quot;, lowBound=0)
+
+modelo += 40*x1 + 30*x2, &quot;Funcion_objetivo&quot;
+modelo += 2*x1 + x2 &lt;= 100, &quot;Recurso_1&quot;
+modelo += x1 + x2 &lt;= 80, &quot;Recurso_2&quot;
+
+modelo.solve(pl.PULP_CBC_CMD(msg=False))
+print(pl.LpStatus[modelo.status])
+print(x1.varValue, x2.varValue, pl.value(modelo.objective))</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ02"><span class="badge">PL-SEC5-EJ02</span><h3>Dieta con PuLP</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Minimización de costo con nutrientes mínimos.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>x arroz=2.6, pollo=1, frijol=0</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: x arroz=2.6, pollo=1, frijol=0.</div>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ03"><span class="badge">PL-SEC5-EJ03</span><h3>Mezcla de productos</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Proporciones que suman 1 y calidad mínima.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>mezcla factible de costo mínimo</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: mezcla factible de costo mínimo.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ04"><span class="badge">PL-SEC5-EJ04</span><h3>Transporte simple</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Variables x[i][j] desde orígenes a destinos.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>costo mínimo=1420</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: costo mínimo=1420.</div>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ05"><span class="badge">PL-SEC5-EJ05</span><h3>Publicidad</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Asignación de presupuesto a canales.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>redes y radio dominan por eficiencia</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: redes y radio dominan por eficiencia.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ06"><span class="badge">PL-SEC5-EJ06</span><h3>Cartera básica</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Proporciones de inversión con riesgo máximo.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>retorno aproximado 9.02%</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: retorno aproximado 9.02%.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ07"><span class="badge">PL-SEC5-EJ07</span><h3>Planeación de turnos</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Cobertura por franjas horarias.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>18 operadores</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: 18 operadores.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ08"><span class="badge">PL-SEC5-EJ08</span><h3>PuLP vs linprog</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Mismo modelo resuelto por dos librerías.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>resultados coincidentes</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: resultados coincidentes.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>import pulp as pl
+
+modelo = pl.LpProblem(&quot;modelo_PL&quot;, pl.LpMaximize)  # usar LpMinimize si aplica
+x1 = pl.LpVariable(&quot;x1&quot;, lowBound=0)
+x2 = pl.LpVariable(&quot;x2&quot;, lowBound=0)
+
+modelo += 40*x1 + 30*x2, &quot;Funcion_objetivo&quot;
+modelo += 2*x1 + x2 &lt;= 100, &quot;Recurso_1&quot;
+modelo += x1 + x2 &lt;= 80, &quot;Recurso_2&quot;
+
+modelo.solve(pl.PULP_CBC_CMD(msg=False))
+print(pl.LpStatus[modelo.status])
+print(x1.varValue, x2.varValue, pl.value(modelo.objective))</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ09"><span class="badge">PL-SEC5-EJ09</span><h3>Validación de restricciones</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Funciones para revisar factibilidad.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>todas las restricciones True</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: todas las restricciones True.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>import pulp as pl
+
+modelo = pl.LpProblem(&quot;modelo_PL&quot;, pl.LpMaximize)  # usar LpMinimize si aplica
+x1 = pl.LpVariable(&quot;x1&quot;, lowBound=0)
+x2 = pl.LpVariable(&quot;x2&quot;, lowBound=0)
+
+modelo += 40*x1 + 30*x2, &quot;Funcion_objetivo&quot;
+modelo += 2*x1 + x2 &lt;= 100, &quot;Recurso_1&quot;
+modelo += x1 + x2 &lt;= 80, &quot;Recurso_2&quot;
+
+modelo.solve(pl.PULP_CBC_CMD(msg=False))
+print(pl.LpStatus[modelo.status])
+print(x1.varValue, x2.varValue, pl.value(modelo.objective))</code></pre>
+</article><article class="example-detail" id="PL-SEC5-EJ10"><span class="badge">PL-SEC5-EJ10</span><h3>Exportar resultados a Excel</h3>
+<h4>Planteamiento</h4>
+<p>Implementación en Python de un problema de PL: Guardar variables y slacks en xlsx/csv.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Componente</th><th>Recomendación</th></tr></thead><tbody><tr><td>Librería principal</td><td>PuLP</td></tr><tr><td>Alternativa</td><td>scipy.optimize.linprog</td></tr><tr><td>Validación</td><td>Recalcular restricciones con la solución</td></tr><tr><td>Resultado esperado</td><td>archivo de resultados para reporte</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Crear objetos LpVariable con lowBound=0. Para problemas indexados, usar diccionarios de variables.</p>
+<h4>Función objetivo</h4>
+<div class="math">En PuLP se agrega con modelo += expresión, &quot;nombre_objetivo&quot;.</div>
+<h4>Restricciones</h4>
+<div class="math">Cada restricción se agrega como una expresión lineal con &lt;=, &gt;= o == y un nombre claro.</div>
+<h4>Dominio</h4>
+<p>Por defecto se modelan variables continuas no negativas. Para enteras: cat="Integer"; para binarias: cat="Binary".</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Escribir primero el modelo matemático.</li><li>Crear el problema con LpMaximize o LpMinimize.</li><li>Definir variables.</li><li>Agregar objetivo y restricciones.</li><li>Resolver.</li><li>Imprimir estado, variables, objetivo y holguras.</li><li>Validar factibilidad recalculando los lados izquierdos.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: archivo de resultados para reporte.</p>
+<h4>Interpretación</h4>
+<p>Python permite reproducibilidad, automatización y comparación de escenarios. La salida debe traducirse a una recomendación operativa.</p>
+<h4>Verificación</h4>
+<p>El estado debe ser Optimal. Si aparece Infeasible o Unbounded, revisar datos, signos de restricciones y unidades.</p>
+<h4>Código / configuración</h4><pre><code>Usar la misma estructura del ejemplo base, cambiando variables, objetivo y restricciones según la tabla del problema.</code></pre>
+</article></main></body></html>

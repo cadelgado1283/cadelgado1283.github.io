@@ -1,0 +1,134 @@
+{
+  "title": "Quiz A5: Python para Programación Lineal",
+  "description": "Implementación con PuLP, validación, estructura del modelo y comparación con linprog.",
+  "questions": [
+    {
+      "type": "multiple",
+      "question": "En PuLP, LpProblem se usa para:",
+      "options": [
+        "Crear el modelo de optimización",
+        "Leer únicamente archivos Excel",
+        "Graficar restricciones",
+        "Calcular histogramas"
+      ],
+      "answer": 0,
+      "feedback": "LpProblem define el problema, su nombre y el sentido de optimización."
+    },
+    {
+      "type": "multiple",
+      "question": "En PuLP, lowBound=0 en una variable significa:",
+      "options": [
+        "La variable no puede ser negativa",
+        "La variable es siempre entera",
+        "La variable vale cero siempre",
+        "La variable es artificial"
+      ],
+      "answer": 0,
+      "feedback": "lowBound=0 impone no negatividad."
+    },
+    {
+      "type": "multiple",
+      "question": "Para maximizar en PuLP se usa:",
+      "options": [
+        "LpMaximize",
+        "LpMinimize",
+        "MAX de Excel",
+        "optimize.graph"
+      ],
+      "answer": 0,
+      "feedback": "LpMaximize define el sentido de la función objetivo como maximización."
+    },
+    {
+      "type": "truefalse",
+      "question": "Después de resolver en PuLP, conviene validar manualmente que las restricciones se cumplan.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 0,
+      "feedback": "La validación ayuda a detectar errores de modelado o de codificación."
+    },
+    {
+      "type": "numeric",
+      "question": "Si Python devuelve x=12 y y=4 para Z=7x+5y, ¿cuánto vale Z?",
+      "answer": 104,
+      "feedback": "Z=7(12)+5(4)=84+20=104."
+    },
+    {
+      "type": "multiple",
+      "question": "scipy.optimize.linprog resuelve por defecto problemas de:",
+      "options": [
+        "Minimización lineal",
+        "Maximización entera",
+        "Simulación discreta",
+        "Regresión logística exclusivamente"
+      ],
+      "answer": 0,
+      "feedback": "linprog minimiza; para maximizar se suele minimizar el negativo de la función objetivo."
+    },
+    {
+      "type": "multiple",
+      "question": "Si se quiere maximizar 10x+8y usando linprog, una estrategia es:",
+      "options": [
+        "Minimizar -10x-8y",
+        "Eliminar la función objetivo",
+        "Cambiar x por texto",
+        "Usar restricciones como objetivo"
+      ],
+      "answer": 0,
+      "feedback": "Maximizar f equivale a minimizar -f."
+    },
+    {
+      "type": "multiple",
+      "question": "Una restricción 2x+3y <= 50 en PuLP se agrega normalmente con:",
+      "options": [
+        "model += 2*x + 3*y <= 50",
+        "print(2*x+3*y)",
+        "x == y == 50",
+        "model.delete()"
+      ],
+      "answer": 0,
+      "feedback": "Las restricciones se agregan al modelo con expresiones lineales y operadores relacionales."
+    },
+    {
+      "type": "truefalse",
+      "question": "Los nombres de restricciones en PuLP ayudan a depurar e interpretar resultados.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "answer": 0,
+      "feedback": "Nombrarlas facilita revisar qué restricción se incumple o queda activa."
+    },
+    {
+      "type": "multiple",
+      "question": "Si el estado del modelo no es Optimal, el estudiante debe:",
+      "options": [
+        "Revisar factibilidad, datos, sentido de optimización y restricciones",
+        "Aceptar cualquier valor impreso",
+        "Cambiar la fuente del editor",
+        "Eliminar todas las variables"
+      ],
+      "answer": 0,
+      "feedback": "Un estado distinto de óptimo exige diagnóstico antes de interpretar resultados."
+    },
+    {
+      "type": "numeric",
+      "question": "Una solución usa 3x+2y unidades de recurso. Si x=6 y y=9, ¿cuánto recurso usa?",
+      "answer": 36,
+      "feedback": "3(6)+2(9)=18+18=36."
+    },
+    {
+      "type": "multiple",
+      "question": "Una ventaja de Python frente a resolver manualmente es:",
+      "options": [
+        "Automatizar modelos grandes y validar resultados repetidamente",
+        "Evitar formular el modelo",
+        "No necesitar datos",
+        "Garantizar siempre sensibilidad completa"
+      ],
+      "answer": 0,
+      "feedback": "Python permite automatizar, reproducir y escalar el análisis, pero no reemplaza la formulación."
+    }
+  ]
+}

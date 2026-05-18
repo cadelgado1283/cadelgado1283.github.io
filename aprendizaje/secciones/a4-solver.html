@@ -1,0 +1,211 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A4. Resolución con Excel Solver</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container"><h1>A4. Resolución con Excel Solver</h1><nav class="section-nav" aria-label="Submenú de secciones"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav><p class="muted"><strong>Competencia:</strong> Configurar modelos lineales en Excel Solver con fórmulas transparentes, restricciones correctas e interpretación de reportes.</p><section class="learning-block"><h2>Guía de aprendizaje</h2><ul class="step-list"><li>Diseñar una hoja con datos, variables, cálculos y restricciones.</li><li>Usar SUMPRODUCT para objetivo y recursos.</li><li>Configurar Solver con Simplex LP.</li><li>Agregar restricciones de no negatividad y límites.</li><li>Generar e interpretar resultados y reportes.</li><li>Auditar fórmulas antes de confiar en la solución.</li></ul></section><section class="learning-block"><h2>Buenas prácticas y errores comunes</h2><ul class="step-list"><li>No escribir valores fijos donde deben ir fórmulas.</li><li>No seleccionar GRG Nonlinear para PL continua.</li><li>No olvidar marcar no negatividad.</li><li>El reporte de sensibilidad aplica a modelos lineales continuos, no a enteros.</li></ul></section><section class="learning-block"><h2>10 ejemplos desarrollados</h2><p>Todos los ejemplos de esta sección incluyen planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación.</p><ol class="toc-list"><li><a href="#PL-SEC4-EJ01">PL-SEC4-EJ01 — Producción básica en Solver</a></li><li><a href="#PL-SEC4-EJ02">PL-SEC4-EJ02 — Mezcla de fertilizantes</a></li><li><a href="#PL-SEC4-EJ03">PL-SEC4-EJ03 — Dieta con mínimos nutricionales</a></li><li><a href="#PL-SEC4-EJ04">PL-SEC4-EJ04 — Transporte simple</a></li><li><a href="#PL-SEC4-EJ05">PL-SEC4-EJ05 — Plan de medios</a></li><li><a href="#PL-SEC4-EJ06">PL-SEC4-EJ06 — Cartera de inversión</a></li><li><a href="#PL-SEC4-EJ07">PL-SEC4-EJ07 — Planeación de turnos</a></li><li><a href="#PL-SEC4-EJ08">PL-SEC4-EJ08 — Inventario simplificado</a></li><li><a href="#PL-SEC4-EJ09">PL-SEC4-EJ09 — Corte de materiales</a></li><li><a href="#PL-SEC4-EJ10">PL-SEC4-EJ10 — Demanda y capacidad</a></li></ol></section><article class="example-detail" id="PL-SEC4-EJ01"><span class="badge">PL-SEC4-EJ01</span><h3>Producción básica en Solver</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:C2</td></tr><tr><td>Celda objetivo</td><td>D4</td></tr><tr><td>Restricciones</td><td>D6<=80, D7<=40</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>x1=20, x2=60, Z=2600</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: x1=20, x2=60, Z=2600.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ02"><span class="badge">PL-SEC4-EJ02</span><h3>Mezcla de fertilizantes</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>F4</td></tr><tr><td>Restricciones</td><td>nutrientes mínimos y suma=1</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>N=0.35, P=0.25, K=0.40, costo mínimo factible</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: N=0.35, P=0.25, K=0.40, costo mínimo factible.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ03"><span class="badge">PL-SEC4-EJ03</span><h3>Dieta con mínimos nutricionales</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>F5</td></tr><tr><td>Restricciones</td><td>proteína>=35, calorías>=700</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>arroz=2.6, pollo=1, fríjol=0, costo=2.24</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: arroz=2.6, pollo=1, fríjol=0, costo=2.24.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ04"><span class="badge">PL-SEC4-EJ04</span><h3>Transporte simple</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>matriz B3:D4</td></tr><tr><td>Celda objetivo</td><td>H8</td></tr><tr><td>Restricciones</td><td>ofertas y demandas</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>costo mínimo=1420</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: costo mínimo=1420.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ05"><span class="badge">PL-SEC4-EJ05</span><h3>Plan de medios</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>F4</td></tr><tr><td>Restricciones</td><td>presupuesto<=6000 y límites</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>radio=4, prensa=0, redes=20</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: radio=4, prensa=0, redes=20.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ06"><span class="badge">PL-SEC4-EJ06</span><h3>Cartera de inversión</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>F4</td></tr><tr><td>Restricciones</td><td>suma=1, riesgo<=4</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>bonos=0.60, acciones=0.3417, CDT=0.0583</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: bonos=0.60, acciones=0.3417, CDT=0.0583.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ07"><span class="badge">PL-SEC4-EJ07</span><h3>Planeación de turnos</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:E2</td></tr><tr><td>Celda objetivo</td><td>F4</td></tr><tr><td>Restricciones</td><td>cobertura por franja</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>T1=7,T2=5,T3=5,T4=1</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: T1=7,T2=5,T3=5,T4=1.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ08"><span class="badge">PL-SEC4-EJ08</span><h3>Inventario simplificado</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>G7</td></tr><tr><td>Restricciones</td><td>balance por periodo</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>producción ajustada a demanda con inventario final mínimo</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<p>Solución esperada: producción ajustada a demanda con inventario final mínimo.</p>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ09"><span class="badge">PL-SEC4-EJ09</span><h3>Corte de materiales</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:D2</td></tr><tr><td>Celda objetivo</td><td>F4</td></tr><tr><td>Restricciones</td><td>demandas mínimas de piezas</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>P1=20,P2=0,P3=20</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: P1=20,P2=0,P3=20.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article><article class="example-detail" id="PL-SEC4-EJ10"><span class="badge">PL-SEC4-EJ10</span><h3>Demanda y capacidad</h3>
+<h4>Planteamiento</h4>
+<p>El estudiante debe montar el modelo en Excel usando fórmulas vinculadas a las celdas variables y resolverlo con el método Simplex LP.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento Solver</th><th>Configuración</th></tr></thead><tbody><tr><td>Celdas variables</td><td>B2:C2</td></tr><tr><td>Celda objetivo</td><td>D4</td></tr><tr><td>Restricciones</td><td>capacidad y demanda mínima</td></tr><tr><td>Método</td><td>Simplex LP</td></tr><tr><td>Resultado esperado</td><td>x=25,y=13.33,Z=833.33</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las celdas variables contienen las cantidades de decisión. Deben iniciar con valores no negativos, por ejemplo 0 o 1.</p>
+<h4>Función objetivo</h4>
+<p>La celda objetivo se calcula con SUMPRODUCT entre coeficientes económicos y celdas variables.</p>
+<h4>Restricciones</h4>
+<p>Cada lado izquierdo se calcula con SUMPRODUCT. Luego Solver compara esas celdas contra disponibilidades, demandas o requerimientos.</p>
+<h4>Dominio</h4>
+<p>Agregar restricción de no negatividad. Usar enteras únicamente si el problema exige cantidades indivisibles.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Organizar datos en tabla: coeficientes, recursos y límites.</li><li>Crear celdas variables.</li><li>Calcular función objetivo con =SUMPRODUCT(...).</li><li>Calcular uso de recursos con =SUMPRODUCT(...).</li><li>Abrir Datos > Solver y seleccionar Simplex LP.</li><li>Generar reporte de sensibilidad si el modelo es lineal continuo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Solución esperada: x=25,y=13.33,Z=833.33.</div>
+<h4>Interpretación</h4>
+<p>La solución debe leerse en unidades del problema: productos, mezclas, anuncios, turnos o envíos. No basta reportar el valor objetivo; se debe explicar la decisión.</p>
+<h4>Verificación</h4>
+<p>Cambiar manualmente algunos valores de las variables y revisar que la celda objetivo y las restricciones cambien correctamente.</p>
+</article></main></body></html>

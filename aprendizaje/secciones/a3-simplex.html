@@ -1,0 +1,211 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A3. Método Simplex manual / tabular</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container"><h1>A3. Método Simplex manual / tabular</h1><nav class="section-nav" aria-label="Submenú de secciones"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav><p class="muted"><strong>Competencia:</strong> Aplicar simplex tabular, convertir a forma estándar e interpretar variables básicas, holguras y criterios de optimalidad.</p><section class="learning-block"><h2>Guía de aprendizaje</h2><ul class="step-list"><li>Pasar el modelo a forma estándar.</li><li>Agregar holguras, excesos y artificiales según corresponda.</li><li>Construir la tabla inicial.</li><li>Aplicar criterio de variable entrante y saliente.</li><li>Ejecutar pivoteo fila por fila.</li><li>Interpretar tabla final y detectar casos especiales.</li></ul></section><section class="learning-block"><h2>Buenas prácticas y errores comunes</h2><ul class="step-list"><li>No usar simplex tabular sin una base factible inicial.</li><li>En restricciones >= se necesita exceso y normalmente artificial.</li><li>En empate de razón mínima puede aparecer degeneración.</li><li>Verificar siempre la solución final en el modelo original.</li></ul></section><section class="learning-block"><h2>10 ejemplos desarrollados</h2><p>Todos los ejemplos de esta sección incluyen planteamiento, variables, función objetivo, restricciones, dominio, solución, interpretación y verificación.</p><ol class="toc-list"><li><a href="#PL-SEC3-EJ01">PL-SEC3-EJ01 — Simplex básico de maximización</a></li><li><a href="#PL-SEC3-EJ02">PL-SEC3-EJ02 — Tres restricciones de capacidad</a></li><li><a href="#PL-SEC3-EJ03">PL-SEC3-EJ03 — Holguras e interpretación</a></li><li><a href="#PL-SEC3-EJ04">PL-SEC3-EJ04 — Restricción mayor o igual</a></li><li><a href="#PL-SEC3-EJ05">PL-SEC3-EJ05 — Método de la M grande</a></li><li><a href="#PL-SEC3-EJ06">PL-SEC3-EJ06 — Dos fases</a></li><li><a href="#PL-SEC3-EJ07">PL-SEC3-EJ07 — Degeneración</a></li><li><a href="#PL-SEC3-EJ08">PL-SEC3-EJ08 — Óptimos alternativos</a></li><li><a href="#PL-SEC3-EJ09">PL-SEC3-EJ09 — Modelo no acotado</a></li><li><a href="#PL-SEC3-EJ10">PL-SEC3-EJ10 — Minimización convertida</a></li></ol></section><article class="example-detail" id="PL-SEC3-EJ01"><span class="badge">PL-SEC3-EJ01</span><h3>Simplex básico de maximización</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=3x1+5x2; restricciones x1<=4, 2x2<=12, 3x1+2x2<=18. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=3x1+5x2; restricciones x1<=4, 2x2<=12, 3x1+2x2<=18</td></tr><tr><td>Resultado esperado</td><td>x1=2, x2=6, Z=36</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=3x1+5x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2, x2=6, Z=36. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ02"><span class="badge">PL-SEC3-EJ02</span><h3>Tres restricciones de capacidad</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=4x1+3x2; 2x1+x2<=8, x1+2x2<=8, x1<=3. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=4x1+3x2; 2x1+x2<=8, x1+2x2<=8, x1<=3</td></tr><tr><td>Resultado esperado</td><td>x1=2.667, x2=2.667, Z=18.667</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=4x1+3x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2.667, x2=2.667, Z=18.667. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ03"><span class="badge">PL-SEC3-EJ03</span><h3>Holguras e interpretación</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=6x1+4x2; x1+x2<=10, 3x1+2x2<=24. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=6x1+4x2; x1+x2<=10, 3x1+2x2<=24</td></tr><tr><td>Resultado esperado</td><td>x1=4, x2=6, Z=48</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=6x1+4x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=4, x2=6, Z=48. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ04"><span class="badge">PL-SEC3-EJ04</span><h3>Restricción mayor o igual</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Min C=2x1+3x2; x1+x2>=8, 2x1+x2>=10. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Min C=2x1+3x2; x1+x2>=8, 2x1+x2>=10</td></tr><tr><td>Resultado esperado</td><td>x1=2, x2=6, C=22</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Min C=2x1+3x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2, x2=6, C=22. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ05"><span class="badge">PL-SEC3-EJ05</span><h3>Método de la M grande</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Min C=4x1+x2; 3x1+x2>=9, x1+x2>=5. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Min C=4x1+x2; 3x1+x2>=9, x1+x2>=5</td></tr><tr><td>Resultado esperado</td><td>x1=2, x2=3, C=11</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Min C=4x1+x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2, x2=3, C=11. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ06"><span class="badge">PL-SEC3-EJ06</span><h3>Dos fases</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=2x1+x2; x1+x2=6, x1+2x2<=10. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=2x1+x2; x1+x2=6, x1+2x2<=10</td></tr><tr><td>Resultado esperado</td><td>x1=2, x2=4, Z=8</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=2x1+x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2, x2=4, Z=8. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ07"><span class="badge">PL-SEC3-EJ07</span><h3>Degeneración</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=x1+x2; x1<=2, y<=2, x1+x2<=2. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=x1+x2; x1<=2, y<=2, x1+x2<=2</td></tr><tr><td>Resultado esperado</td><td>cualquier vértice en frontera; óptimo Z=2</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=x1+x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: cualquier vértice en frontera; óptimo Z=2. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ08"><span class="badge">PL-SEC3-EJ08</span><h3>Óptimos alternativos</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=2x1+2x2; x1+x2<=5, x1<=4, x2<=4. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=2x1+2x2; x1+x2<=5, x1<=4, x2<=4</td></tr><tr><td>Resultado esperado</td><td>segmento x1+x2=5, Z=10</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=2x1+2x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: segmento x1+x2=5, Z=10. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ09"><span class="badge">PL-SEC3-EJ09</span><h3>Modelo no acotado</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Max Z=x1+x2; x1-x2>=1, x2>=0. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Max Z=x1+x2; x1-x2>=1, x2>=0</td></tr><tr><td>Resultado esperado</td><td>no acotado</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Max Z=x1+x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<p>Resultado final: no acotado. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</p>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article><article class="example-detail" id="PL-SEC3-EJ10"><span class="badge">PL-SEC3-EJ10</span><h3>Minimización convertida</h3>
+<h4>Planteamiento</h4>
+<p>Se resuelve por simplex tabular el modelo: Min C=5x1+4x2; x1+2x2>=8, 3x1+x2>=9. El objetivo del ejemplo es mostrar forma estándar, elección de pivote y lectura de la solución.</p>
+<h4>Datos</h4>
+<table class="data-table mini-table"><thead><tr><th>Elemento</th><th>Detalle</th></tr></thead><tbody><tr><td>Modelo</td><td>Min C=5x1+4x2; x1+2x2>=8, 3x1+x2>=9</td></tr><tr><td>Resultado esperado</td><td>x1=2, x2=3, C=22</td></tr></tbody></table>
+<h4>Variables de decisión</h4>
+<p>Las variables originales son x1 y x2. Se agregan variables de holgura, exceso o artificiales según el tipo de restricción.</p>
+<h4>Función objetivo</h4>
+<div class="math">Min C=5x1+4x2</div>
+<h4>Restricciones</h4>
+<div class="math">Se escriben las restricciones en forma estándar: restricciones &lt;= agregan holgura; restricciones &gt;= restan exceso y agregan artificial; restricciones = agregan artificial si no hay variable básica inicial.</div>
+<h4>Dominio</h4>
+<p>Todas las variables originales y auxiliares son no negativas.</p>
+<h4>Método / procedimiento</h4>
+<ul class="step-list"><li>Construir la tabla inicial con una base factible.</li><li>Seleccionar variable entrante según el criterio de mejora de la fila Z.</li><li>Seleccionar variable saliente con la menor razón positiva RHS/coeficiente pivote.</li><li>Normalizar la fila pivote y eliminar la columna pivote en las demás filas.</li><li>Repetir hasta que no existan coeficientes de mejora en la fila objetivo.</li></ul>
+<h4>Solución</h4>
+<div class="math">Resultado final: x1=2, x2=3, C=22. En la tabla final, las variables básicas tienen los valores del lado derecho y las no básicas valen cero.</div>
+<h4>Interpretación</h4>
+<p>La solución indica la combinación óptima y las holguras muestran recursos no utilizados. Una holgura cero indica restricción activa.</p>
+<h4>Verificación</h4>
+<p>Verificar que el valor reportado satisface todas las restricciones originales y que la fila objetivo cumple el criterio de optimalidad.</p>
+</article></main></body></html>
