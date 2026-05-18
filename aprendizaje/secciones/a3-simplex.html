@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A3. Método Simplex manual / tabular</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="logo" href="../index.html">PL Lab</a>
+  <nav aria-label="Navegación principal">
+    <a href="../index.html">Inicio</a>
+    <a href="../ruta.html">Ruta</a>
+    <a href="a1-formulacion.html">Secciones</a>
+    <a href="../ejercicios/index.html">Ejercicios</a>
+    <a href="../quices/index.html">Quices</a>
+    <a href="../tutor/tutor.html">Tutor</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>A3. Método Simplex manual / tabular</h1>
+  <nav class="section-nav" aria-label="Submenú de secciones">
+    <a href="a1-formulacion.html">A1 Formulación</a>
+    <a href="a2-grafico.html">A2 Gráfico</a>
+    <a href="a3-simplex.html">A3 Simplex</a>
+    <a href="a4-solver.html">A4 Solver</a>
+    <a href="a5-python.html">A5 Python</a>
+    <a href="a6-sensibilidad.html">A6 Sensibilidad</a>
+  </nav>
+
+  <p class="muted"><strong>Competencia:</strong> Aplicar el método simplex en su versión manual/tabular para resolver e interpretar modelos de Programación Lineal, incluyendo forma estándar, variables de holgura/exceso/artificiales, criterio de optimalidad, pivoteo, M grande, dos fases y casos especiales.</p>
+
+  <section class="learning-block">
+    <h2>¿Qué es el método simplex y por qué es importante?</h2>
+    <p>El método simplex es el algoritmo clásico para resolver problemas de Programación Lineal cuando el número de variables o restricciones hace impráctico el método gráfico. Su idea central es recorrer sistemáticamente los vértices de la región factible hasta encontrar uno que optimice la función objetivo. En su versión <strong>manual / tabular</strong>, cada iteración se organiza en una tabla que muestra la base actual, los coeficientes tecnológicos, la contribución de las variables básicas, los costos reducidos y el valor del lado derecho.</p>
+    <p>Pedagógicamente, el simplex permite entender:</p>
+    <ul class="step-list">
+      <li>cómo se construye una <strong>base factible inicial</strong>;</li>
+      <li>cómo se mueve el algoritmo de una solución básica factible a otra;</li>
+      <li>qué significa que una variable <strong>entre</strong> o <strong>salga</strong> de la base;</li>
+      <li>cómo detectar <strong>óptimo, degeneración, óptimos alternativos, infactibilidad y no acotación</strong>;</li>
+      <li>por qué las variables de holgura, exceso y artificiales son herramientas algebraicas fundamentales.</li>
+    </ul>
+    <div class="callout">
+      <strong>Intuición central:</strong> el simplex no “prueba al azar”. En cada iteración mejora la solución actual usando la información contenida en la fila de costos reducidos. Esa fila indica qué variable conviene introducir en la base para mejorar el valor de la función objetivo.
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>Fundamentos teóricos del método simplex</h2>
+    <h3>1. Forma estándar</h3>
+    <p>Para trabajar tabularmente, el modelo se transforma a una forma algebraica manejable:</p>
+    <ul class="step-list">
+      <li>restricciones <span class="math">\le</span>: se agrega una variable de <strong>holgura</strong>;</li>
+      <li>restricciones <span class="math">\ge</span>: se resta una variable de <strong>exceso</strong> y normalmente se agrega una <strong>artificial</strong>;</li>
+      <li>restricciones de igualdad: suelen requerir una variable artificial si no existe una columna identidad natural;</li>
+      <li>todas las variables deben ser no negativas.</li>
+    </ul>
+
+    <h3>2. Base y solución básica factible</h3>
+    <p>Una <strong>base</strong> es un conjunto de variables cuyas columnas forman una matriz identidad. En una tabla simplex, las variables básicas toman los valores del lado derecho (RHS) y las no básicas se fijan temporalmente en cero. Si todos los RHS son no negativos, se tiene una <strong>solución básica factible</strong>.</p>
+
+    <h3>3. Estructura de la tabla simplex</h3>
+    <p>La tabla simplex suele mostrar:</p>
+    <ul class="step-list">
+      <li>la columna <strong>Base</strong> y el costo básico <strong>Cb</strong>;</li>
+      <li>los coeficientes de cada variable en las restricciones;</li>
+      <li>el lado derecho <strong>RHS</strong>;</li>
+      <li>la fila <strong>Zj</strong> o <strong>Cj - Zj</strong> (también se usa <strong>Zj - Cj</strong> según convención).</li>
+    </ul>
+    <p>En este material se usa principalmente la convención <strong>Cj − Zj</strong> para problemas de maximización: mientras exista un valor positivo en esa fila, aún puede mejorarse la función objetivo.</p>
+
+    <h3>4. Regla de entrada y salida</h3>
+    <ul class="step-list">
+      <li><strong>Variable entrante:</strong> la variable no básica con mayor mejora potencial, usualmente el mayor valor positivo en <span class="math">Cj-Zj</span>.</li>
+      <li><strong>Variable saliente:</strong> se determina con la <strong>prueba de razón mínima</strong>, usando <span class="math">RHS/a_{ij}</span> solo para coeficientes estrictamente positivos en la columna pivote.</li>
+      <li><strong>Pivoteo:</strong> se normaliza la fila pivote y luego se anulan los demás coeficientes de la columna pivote mediante operaciones elementales.</li>
+    </ul>
+
+    <h3>5. Optimalidad y diagnósticos</h3>
+    <ul class="step-list">
+      <li><strong>Óptimo:</strong> no quedan valores positivos en <span class="math">Cj-Zj</span> (en maximización, con esta convención).</li>
+      <li><strong>Óptimos alternativos:</strong> en la tabla final, alguna variable no básica tiene costo reducido cero.</li>
+      <li><strong>Degeneración:</strong> una variable básica toma valor cero o hay empates en la razón mínima.</li>
+      <li><strong>No acotación:</strong> la variable entrante no tiene coeficientes positivos en su columna para aplicar la prueba de razón.</li>
+      <li><strong>Infactibilidad:</strong> al terminar Fase I permanece alguna artificial positiva en la base.</li>
+    </ul>
+
+    <h3>6. M grande y dos fases</h3>
+    <p>Cuando no existe una base factible inicial natural, se usan dos estrategias comunes:</p>
+    <div class="solution-grid">
+      <div class="callout"><strong>M grande:</strong> se penalizan las variables artificiales en la función objetivo con una constante muy grande <span class="math">M</span>, forzando su salida de la base.</div>
+      <div class="callout"><strong>Dos fases:</strong> en la Fase I se minimiza la suma de artificiales para encontrar una base factible; en la Fase II se optimiza la función objetivo original desde esa base.</div>
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>Guía de aprendizaje paso a paso</h2>
+    <ol class="step-list">
+      <li><strong>Leer cuidadosamente el modelo.</strong> Identifica si es de maximización o minimización, el tipo de restricciones y si todas las variables ya son no negativas.</li>
+      <li><strong>Transformar a forma estándar.</strong> Agrega holguras, excesos y artificiales cuando corresponda. Este paso es determinante, porque de él depende la posibilidad de construir una base inicial.</li>
+      <li><strong>Elegir el enfoque adecuado.</strong> Si todas las restricciones son <span class="math">\le</span> con RHS no negativos, suele existir una base natural de holguras. Si hay <span class="math">\ge</span> o igualdades, decide si conviene usar M grande o dos fases.</li>
+      <li><strong>Construir la tabla inicial.</strong> Rotula columnas y registra claramente Base, Cb, coeficientes tecnológicos y RHS.</li>
+      <li><strong>Calcular Zj y Cj − Zj.</strong> Esta fila resume la calidad de la solución actual y dirige la elección de la variable entrante.</li>
+      <li><strong>Seleccionar la variable entrante.</strong> Escoge la de mayor mejora potencial. En problemas de maximización con la convención usada aquí, se elige el mayor valor positivo en <span class="math">Cj-Zj</span>.</li>
+      <li><strong>Aplicar la prueba de razón mínima.</strong> Divide RHS entre los coeficientes positivos de la columna pivote. La menor razón positiva identifica la variable saliente.</li>
+      <li><strong>Realizar el pivoteo.</strong> Convierte el pivote en 1 y los demás elementos de su columna en 0. Este paso actualiza la base y genera una nueva solución básica factible.</li>
+      <li><strong>Repetir iteraciones.</strong> En cada nueva tabla, recalcula Zj y Cj − Zj y verifica si aún existe mejora posible.</li>
+      <li><strong>Interpretar la tabla final.</strong> Extrae los valores de las variables básicas, identifica las holguras, interpreta el valor óptimo y verifica el resultado en el modelo original.</li>
+    </ol>
+    <div class="callout warning">
+      <strong>Errores frecuentes:</strong> olvidar cambiar el signo de una restricción al normalizar, usar razones con coeficientes no positivos, no actualizar Zj correctamente, o interpretar como óptima una tabla que aún tiene mejoras posibles.
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>10 ejemplos desarrollados con iteraciones tabulares</h2>
+    <p>Cada ejemplo incluye formulación, paso a forma estándar y al menos las tablas clave del proceso simplex: tabla inicial, iteraciones relevantes y tabla final o diagnóstico del caso especial.</p>
+    <ol class="toc-list">
+      <li><a href="#PL-SEC3-EJ01">PL-SEC3-EJ01 — Simplex básico de maximización</a></li>
+      <li><a href="#PL-SEC3-EJ02">PL-SEC3-EJ02 — Tres restricciones de capacidad</a></li>
+      <li><a href="#PL-SEC3-EJ03">PL-SEC3-EJ03 — Holguras e interpretación</a></li>
+      <li><a href="#PL-SEC3-EJ04">PL-SEC3-EJ04 — Restricción mayor o igual</a></li>
+      <li><a href="#PL-SEC3-EJ05">PL-SEC3-EJ05 — Método de la M grande</a></li>
+      <li><a href="#PL-SEC3-EJ06">PL-SEC3-EJ06 — Dos fases</a></li>
+      <li><a href="#PL-SEC3-EJ07">PL-SEC3-EJ07 — Degeneración</a></li>
+      <li><a href="#PL-SEC3-EJ08">PL-SEC3-EJ08 — Óptimos alternativos</a></li>
+      <li><a href="#PL-SEC3-EJ09">PL-SEC3-EJ09 — Modelo no acotado</a></li>
+      <li><a href="#PL-SEC3-EJ10">PL-SEC3-EJ10 — Minimización convertida</a></li>
+    </ol>
+  </section>
+
+  <article class="example-detail" id="PL-SEC3-EJ01">
+    <span class="badge">PL-SEC3-EJ01</span>
+    <h3>Simplex básico de maximización</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=3x_1+5x_2</span> sujeto a <span class="math">x_1\le4</span>, <span class="math">2x_2\le12</span>, <span class="math">3x_1+2x_2\le18</span>.</p>
+    <h4>Forma estándar</h4>
+    <div class="math">x_1+s_1=4<br>2x_2+s_2=12<br>3x_1+2x_2+s_3=18</div>
+    <h4>Tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>s2</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>12</td></tr>
+      <tr><td>s3</td><td>0</td><td>3</td><td>2</td><td>0</td><td>0</td><td>1</td><td>18</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>3</th><th>5</th><th>0</th><th>0</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p><strong>Entrante:</strong> <span class="math">x_2</span> (mayor mejora). <strong>Razones:</strong> 12/2 = 6, 18/2 = 9; sale <span class="math">s_2</span>.</p>
+    <h4>Iteración 1</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>x2</td><td>5</td><td>0</td><td>1</td><td>0</td><td>1/2</td><td>0</td><td>6</td></tr>
+      <tr><td>s3</td><td>0</td><td>3</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>6</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>3</th><th>0</th><th>0</th><th>-2.5</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p><strong>Entrante:</strong> <span class="math">x_1</span>. <strong>Razones:</strong> 4/1 = 4 y 6/3 = 2; sale <span class="math">s_3</span>.</p>
+    <h4>Tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1/3</td><td>-1/3</td><td>2</td></tr>
+      <tr><td>x2</td><td>5</td><td>0</td><td>1</td><td>0</td><td>1/2</td><td>0</td><td>6</td></tr>
+      <tr><td>x1</td><td>3</td><td>1</td><td>0</td><td>0</td><td>-1/3</td><td>1/3</td><td>2</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>0</th><th>0</th><th>0</th><th>-1.5</th><th>-1</th><th>Z = 36</th></tr>
+    </tbody></table>
+    <p><strong>Solución:</strong> <span class="math">x_1=2</span>, <span class="math">x_2=6</span>, <span class="math">Z=36</span>. La holgura <span class="math">s_1=2</span> indica que la primera restricción no se usa totalmente; las otras dos son activas.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ02">
+    <span class="badge">PL-SEC3-EJ02</span>
+    <h3>Tres restricciones de capacidad</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=5x_1+4x_2</span> sujeto a <span class="math">x_1\le4</span>, <span class="math">x_2\le3</span>, <span class="math">x_1+x_2\le5</span>.</p>
+    <div class="math">x_1+s_1=4<br>x_2+s_2=3<br>x_1+x_2+s_3=5</div>
+    <h4>Tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>s2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>3</td></tr>
+      <tr><td>s3</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>5</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>5</th><th>4</th><th>0</th><th>0</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p>Entra <span class="math">x_1</span>. Razones: 4/1 = 4 y 5/1 = 5; sale <span class="math">s_1</span>.</p>
+    <h4>Iteración 1</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x1</td><td>5</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>s2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>3</td></tr>
+      <tr><td>s3</td><td>0</td><td>0</td><td>1</td><td>-1</td><td>0</td><td>1</td><td>1</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>0</th><th>4</th><th>-5</th><th>0</th><th>0</th><th>Z = 20</th></tr>
+    </tbody></table>
+    <p>Entra <span class="math">x_2</span>. Razones: 3/1 = 3 y 1/1 = 1; sale <span class="math">s_3</span>.</p>
+    <h4>Tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x1</td><td>5</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+      <tr><td>s2</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>-1</td><td>2</td></tr>
+      <tr><td>x2</td><td>4</td><td>0</td><td>1</td><td>-1</td><td>0</td><td>1</td><td>1</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>0</th><th>0</th><th>-1</th><th>0</th><th>-4</th><th>Z = 24</th></tr>
+    </tbody></table>
+    <p><strong>Solución:</strong> <span class="math">x_1=4</span>, <span class="math">x_2=1</span>, <span class="math">Z=24</span>. La segunda restricción tiene holgura 2, lo que significa capacidad ociosa en ese recurso.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ03">
+    <span class="badge">PL-SEC3-EJ03</span>
+    <h3>Holguras e interpretación</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=6x_1+4x_2</span> sujeto a <span class="math">x_1+x_2\le10</span>, <span class="math">3x_1+2x_2\le24</span>.</p>
+    <div class="math">x_1+x_2+s_1=10<br>3x_1+2x_2+s_2=24</div>
+    <h4>Tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>10</td></tr>
+      <tr><td>s2</td><td>0</td><td>3</td><td>2</td><td>0</td><td>1</td><td>24</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>6</th><th>4</th><th>0</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p>Entra <span class="math">x_1</span>. Razones: 10/1 = 10 y 24/3 = 8; sale <span class="math">s_2</span>.</p>
+    <h4>Tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>0</td><td>1/3</td><td>1</td><td>-1/3</td><td>2</td></tr>
+      <tr><td>x1</td><td>6</td><td>1</td><td>2/3</td><td>0</td><td>1/3</td><td>8</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>0</th><th>0</th><th>0</th><th>-2</th><th>Z = 48</th></tr>
+    </tbody></table>
+    <p><strong>Interpretación:</strong> la solución óptima es <span class="math">x_1=8</span>, <span class="math">x_2=0</span>. La holgura <span class="math">s_1=2</span> muestra que la primera restricción no se utiliza completamente. La segunda restricción es activa porque <span class="math">s_2=0</span>.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ04">
+    <span class="badge">PL-SEC3-EJ04</span>
+    <h3>Restricción mayor o igual</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Min } C=2x_1+3x_2</span> sujeto a <span class="math">x_1+x_2\ge8</span>, <span class="math">2x_1+x_2\ge10</span>.</p>
+    <p>Como las restricciones son del tipo <span class="math">\ge</span>, se introducen variables de exceso y artificiales. Aquí se ilustra el enfoque de <strong>dos fases</strong> para construir una base factible.</p>
+    <h4>Forma estándar</h4>
+    <div class="math">x_1+x_2-e_1+a_1=8<br>2x_1+x_2-e_2+a_2=10</div>
+    <h4>Fase I: tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e1</th><th>e2</th><th>a1</th><th>a2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>a1</td><td>1</td><td>1</td><td>1</td><td>-1</td><td>0</td><td>1</td><td>0</td><td>8</td></tr>
+      <tr><td>a2</td><td>1</td><td>2</td><td>1</td><td>0</td><td>-1</td><td>0</td><td>1</td><td>10</td></tr>
+      <tr><th colspan="2">Objetivo Fase I</th><th colspan="7">Minimizar W = a1 + a2</th></tr>
+    </tbody></table>
+    <p>Tras los pivotes de Fase I, las artificiales salen de la base y se obtiene una base factible con <span class="math">W=0</span>.</p>
+    <h4>Fase II: tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e1</th><th>e2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x2</td><td>3</td><td>0</td><td>1</td><td>-2</td><td>1</td><td>6</td></tr>
+      <tr><td>x1</td><td>2</td><td>1</td><td>0</td><td>1</td><td>-1</td><td>2</td></tr>
+      <tr><th colspan="2">Diagnóstico</th><th colspan="5">Óptimo alcanzado</th></tr>
+    </tbody></table>
+    <p><strong>Solución:</strong> <span class="math">x_1=2</span>, <span class="math">x_2=6</span>, <span class="math">C=22</span>. Este ejemplo muestra que las restricciones <span class="math">\ge</span> no admiten normalmente una base inicial natural y requieren tratamiento especial.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ05">
+    <span class="badge">PL-SEC3-EJ05</span>
+    <h3>Método de la M grande</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=4x_1+3x_2</span> sujeto a <span class="math">x_1+x_2\ge4</span>, <span class="math">x_1+2x_2\le6</span>.</p>
+    <h4>Forma estándar con penalización M</h4>
+    <div class="math">x_1+x_2-e_1+a_1=4<br>x_1+2x_2+s_2=6<br>\text{Max } Z = 4x_1+3x_2 - M a_1</div>
+    <h4>Tabla inicial (M grande)</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e1</th><th>s2</th><th>a1</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>a1</td><td>-M</td><td>1</td><td>1</td><td>-1</td><td>0</td><td>1</td><td>4</td></tr>
+      <tr><td>s2</td><td>0</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>6</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>4+M</th><th>3+M</th><th>-M</th><th>0</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p>Como <span class="math">M</span> es grande, el método forzará la salida de <span class="math">a_1</span>. Tras el pivote correspondiente, la artificial abandona la base y el algoritmo continúa como simplex normal.</p>
+    <h4>Tabla final resumida</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e1</th><th>s2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x1</td><td>4</td><td>1</td><td>0</td><td>-2</td><td>-1</td><td>6</td></tr>
+      <tr><td>e1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>2</td></tr>
+      <tr><th colspan="2">Diagnóstico</th><th colspan="5">Óptimo: x1 = 6, x2 = 0, Z = 24</th></tr>
+    </tbody></table>
+    <p>La solución óptima es <span class="math">x_1=6</span>, <span class="math">x_2=0</span>. El ejemplo ilustra que la artificial no debe permanecer en la base en una solución final válida.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ06">
+    <span class="badge">PL-SEC3-EJ06</span>
+    <h3>Dos fases</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=3x_1+2x_2</span> sujeto a <span class="math">x_1+x_2=4</span>, <span class="math">x_1+2x_2\ge6</span>.</p>
+    <h4>Forma estándar</h4>
+    <div class="math">x_1+x_2+a_1=4<br>x_1+2x_2-e_2+a_2=6</div>
+    <h4>Fase I</h4>
+    <p>Se minimiza <span class="math">W=a_1+a_2</span> hasta lograr <span class="math">W=0</span>. El objetivo de esta fase no es optimizar el problema original, sino encontrar una base factible.</p>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e2</th><th>a1</th><th>a2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>a1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>4</td></tr>
+      <tr><td>a2</td><td>1</td><td>1</td><td>2</td><td>-1</td><td>0</td><td>1</td><td>6</td></tr>
+      <tr><th colspan="2">Resultado Fase I</th><th colspan="6">Se obtiene una base factible con x1 y x2 básicas</th></tr>
+    </tbody></table>
+    <h4>Fase II: tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x1</td><td>3</td><td>1</td><td>0</td><td>1</td><td>2</td></tr>
+      <tr><td>x2</td><td>2</td><td>0</td><td>1</td><td>-1</td><td>2</td></tr>
+      <tr><th colspan="2">Diagnóstico</th><th colspan="4">Óptimo: Z = 10</th></tr>
+    </tbody></table>
+    <p><strong>Solución:</strong> <span class="math">x_1=2</span>, <span class="math">x_2=2</span>, <span class="math">Z=10</span>. Este ejemplo muestra claramente la lógica de separar “encontrar factibilidad” de “optimizar”.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ07">
+    <span class="badge">PL-SEC3-EJ07</span>
+    <h3>Degeneración</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=x_1+x_2</span> sujeto a <span class="math">x_1\le2</span>, <span class="math">x_2\le2</span>, <span class="math">x_1+x_2\le2</span>.</p>
+    <div class="math">x_1+s_1=2<br>x_2+s_2=2<br>x_1+x_2+s_3=2</div>
+    <h4>Tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>2</td></tr>
+      <tr><td>s2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>2</td></tr>
+      <tr><td>s3</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>2</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>1</th><th>1</th><th>0</th><th>0</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p>Si entra <span class="math">x_1</span>, la prueba de razón da 2/1 = 2 tanto en la fila 1 como en la fila 3. El empate puede originar <strong>degeneración</strong>: una nueva base con alguna variable básica en cero.</p>
+    <h4>Diagnóstico tabular</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Observación</th><th>Interpretación</th></tr></thead><tbody>
+      <tr><td>Empate en la razón mínima</td><td>Existe más de una posible variable saliente.</td></tr>
+      <tr><td>RHS básico igual a 0 en alguna iteración</td><td>La solución básica es degenerada.</td></tr>
+      <tr><td>Puede no mejorar Z temporalmente</td><td>El algoritmo puede “moverse” de base sin incrementar el valor objetivo.</td></tr>
+    </tbody></table>
+    <p>La degeneración no significa error; solo advierte que la geometría del problema tiene vértices donde se activan más restricciones de las estrictamente necesarias.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ08">
+    <span class="badge">PL-SEC3-EJ08</span>
+    <h3>Óptimos alternativos</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=2x_1+2x_2</span> sujeto a <span class="math">x_1+x_2\le5</span>, <span class="math">x_1\le4</span>, <span class="math">x_2\le4</span>.</p>
+    <div class="math">x_1+x_2+s_1=5<br>x_1+s_2=4<br>x_2+s_3=4</div>
+    <h4>Tabla final característica</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x1</td><td>2</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>4</td></tr>
+      <tr><td>x2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>-1</td><td>0</td><td>1</td></tr>
+      <tr><td>s3</td><td>0</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>1</td><td>3</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>0</th><th>0</th><th>0</th><th>-2</th><th>0</th><th>Z = 10</th></tr>
+    </tbody></table>
+    <p>La clave está en que una variable no básica asociada a una dirección factible puede tener costo reducido cero. Eso significa que existe otra base óptima distinta. En términos geométricos, el óptimo no está en un solo vértice sino en un segmento completo.</p>
+    <p><strong>Conclusión:</strong> hay múltiples soluciones con <span class="math">x_1+x_2=5</span> y <span class="math">Z=10</span>.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ09">
+    <span class="badge">PL-SEC3-EJ09</span>
+    <h3>Modelo no acotado</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Max } Z=x_1+x_2</span> sujeto a <span class="math">x_1-x_2\le1</span>, con <span class="math">x_1,x_2\ge0</span>.</p>
+    <div class="math">x_1-x_2+s_1=1</div>
+    <h4>Tabla inicial</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>s1</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>s1</td><td>0</td><td>1</td><td>-1</td><td>1</td><td>1</td></tr>
+      <tr><th colspan="2">Cj − Zj</th><th>1</th><th>1</th><th>0</th><th>—</th></tr>
+    </tbody></table>
+    <p>Entra <span class="math">x_1</span> y se obtiene una base con <span class="math">x_1=1</span>. Luego la fila de costos reducidos indica que <span class="math">x_2</span> también puede mejorar la FO, pero en su columna no aparece ningún coeficiente positivo para aplicar la prueba de razón mínima.</p>
+    <h4>Diagnóstico</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Condición</th><th>Conclusión</th></tr></thead><tbody>
+      <tr><td>Existe variable entrante con mejora positiva</td><td>Sí</td></tr>
+      <tr><td>Todos los coeficientes en la columna pivote son ≤ 0</td><td>Sí</td></tr>
+      <tr><td>¿Hay variable saliente?</td><td>No</td></tr>
+      <tr><td>Resultado</td><td>Problema no acotado</td></tr>
+    </tbody></table>
+    <p>El simplex detecta que la función objetivo puede crecer indefinidamente sin violar las restricciones. Ese es el sello algebraico del caso no acotado.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC3-EJ10">
+    <span class="badge">PL-SEC3-EJ10</span>
+    <h3>Minimización convertida</h3>
+    <p><strong>Modelo:</strong> <span class="math">\text{Min } C=5x_1+4x_2</span> sujeto a <span class="math">x_1+2x_2\ge8</span>, <span class="math">3x_1+x_2\ge9</span>.</p>
+    <p>Este problema puede resolverse por simplex usando dos fases o M grande, o bien convirtiendo apropiadamente a una forma tabular de maximización equivalente. Aquí se ilustra mediante una formulación con artificiales y Fase I/Fase II.</p>
+    <h4>Forma estándar</h4>
+    <div class="math">x_1+2x_2-e_1+a_1=8<br>3x_1+x_2-e_2+a_2=9</div>
+    <h4>Resultado de Fase I</h4>
+    <p>Se obtiene una base factible sin artificiales. A partir de esa base se reinstala la función objetivo original.</p>
+    <h4>Tabla final</h4>
+    <table class="data-table simplex-table"><thead><tr><th>Base</th><th>Cb</th><th>x1</th><th>x2</th><th>e1</th><th>e2</th><th>RHS</th></tr></thead><tbody>
+      <tr><td>x2</td><td>4</td><td>0</td><td>1</td><td>3/5</td><td>-1/5</td><td>3</td></tr>
+      <tr><td>x1</td><td>5</td><td>1</td><td>0</td><td>-1/5</td><td>2/5</td><td>2</td></tr>
+      <tr><th colspan="2">Diagnóstico</th><th colspan="5">Óptimo: C = 22</th></tr>
+    </tbody></table>
+    <p><strong>Solución:</strong> <span class="math">x_1=2</span>, <span class="math">x_2=3</span>, con costo mínimo <span class="math">C=22</span>. El ejemplo refuerza que la lógica del simplex sigue siendo la misma: encontrar base factible y luego mejorar hasta la optimalidad.</p>
+  </article>
+
+  <section class="learning-block">
+    <h2>Buenas prácticas y errores comunes</h2>
+    <ul class="step-list">
+      <li>Escribe siempre el modelo original antes de transformarlo: esto facilita la verificación final.</li>
+      <li>Usa una convención única para la fila de optimalidad (por ejemplo, siempre <span class="math">Cj-Zj</span>).</li>
+      <li>No apliques la prueba de razón con coeficientes nulos o negativos en la columna pivote.</li>
+      <li>En M grande y dos fases, controla cuidadosamente la salida de artificiales.</li>
+      <li>Interpreta las holguras y excesos: no son solo variables técnicas, también aportan significado gerencial.</li>
+      <li>Si el problema parece “raro”, verifica si hay degeneración, múltiples óptimos, infactibilidad o no acotación.</li>
+    </ul>
+  </section>
+
+  <section class="learning-block">
+    <h2>Cierre de la sección</h2>
+    <p>Dominar el método simplex manual es esencial porque permite comprender el corazón algorítmico de la Programación Lineal. Aunque en la práctica se usen Solver o Python, entender la lógica tabular hace posible interpretar resultados, diagnosticar problemas de formulación y seguir con rigor el razonamiento detrás del óptimo. Si ya comprendes forma estándar, construcción de base, pivoteo y casos especiales, estás listo para pasar a la automatización con Excel Solver y Python.</p>
+  </section>
+</main>
+</body>
+</html>
