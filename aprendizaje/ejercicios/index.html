@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ejercicios y casos detallados</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">PL Lab</a>
+    <nav aria-label="Navegación principal">
+      <a href="../index.html">Inicio</a>
+      <a href="../ruta.html">Ruta</a>
+      <a href="../secciones/a1-formulacion.html">Secciones</a>
+      <a href="../ejercicios/index.html">Ejercicios</a>
+      <a href="../quices/index.html">Quices</a>
+      <a href="../tutor/tutor.html">Tutor</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero compact-hero">
+      <span class="badge">Banco actualizado</span>
+      <h1>Ejercicios y casos de estudio</h1>
+      <p>45 problemas completos con contexto, datos numéricos, objetivo, entregables y pistas opcionales. En esta sección no se muestran soluciones.</p>
+    </section>
+
+    <div class="filterbar" aria-label="Filtros de ejercicios">
+      <input id="q" placeholder="Buscar por ID, tema, método o palabra clave" aria-label="Buscar problemas">
+      <select id="theme" aria-label="Filtrar por tema"><option value="">Todos los temas</option></select>
+      <select id="difficulty" aria-label="Filtrar por dificultad"><option value="">Todas las dificultades</option></select>
+      <select id="method" aria-label="Filtrar por método"><option value="">Todos los métodos</option></select>
+    </div>
+
+    <p id="count" class="muted"></p>
+    <section id="problems" class="problem-list"></section>
+  </main>
+
+  <script src="../assets/js/problems.js"></script>
+</body>
+</html>

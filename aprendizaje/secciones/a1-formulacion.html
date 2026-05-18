@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A1. Formulación de modelos de Programación Lineal</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="logo" href="../index.html">PL Lab</a>
+  <nav aria-label="Navegación principal">
+    <a href="../index.html">Inicio</a>
+    <a href="../ruta.html">Ruta</a>
+    <a href="a1-formulacion.html">Secciones</a>
+    <a href="../ejercicios/index.html">Ejercicios</a>
+    <a href="../quices/index.html">Quices</a>
+    <a href="../tutor/tutor.html">Tutor</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>A1. Formulación de modelos de Programación Lineal</h1>
+  <nav class="section-nav" aria-label="Submenú de secciones">
+    <a href="a1-formulacion.html">A1 Formulación</a>
+    <a href="a2-grafico.html">A2 Gráfico</a>
+    <a href="a3-simplex.html">A3 Simplex</a>
+    <a href="a4-solver.html">A4 Solver</a>
+    <a href="a5-python.html">A5 Python</a>
+    <a href="a6-sensibilidad.html">A6 Sensibilidad</a>
+  </nav>
+
+  <p class="muted"><strong>Competencia:</strong> traducir problemas reales de decisión a modelos matemáticos lineales completos, coherentes y verificables, identificando variables de decisión, parámetros, función objetivo, restricciones, dominio, unidades y supuestos.</p>
+
+  <section class="learning-block">
+    <h2>¿Qué significa formular un modelo de Programación Lineal?</h2>
+    <p>Formular un modelo de Programación Lineal consiste en convertir una situación real de decisión en un sistema matemático compuesto por una función objetivo lineal, restricciones lineales y condiciones de dominio. La formulación es la etapa más importante del proceso de optimización: si el modelo representa mal el problema, ningún método de solución —gráfico, simplex, Solver o Python— podrá entregar una recomendación confiable.</p>
+    <p>Un modelo de PL responde tres preguntas fundamentales:</p>
+    <div class="solution-grid">
+      <div class="callout"><strong>¿Qué se decide?</strong><br>Las variables de decisión representan las cantidades que el decisor puede controlar.</div>
+      <div class="callout"><strong>¿Qué se quiere lograr?</strong><br>La función objetivo mide utilidad, costo, ingreso, desperdicio, cobertura, riesgo o tiempo.</div>
+      <div class="callout"><strong>¿Qué limita la decisión?</strong><br>Las restricciones representan capacidades, demandas, balances, políticas, presupuestos o requerimientos mínimos.</div>
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>Teoría esencial de la formulación de modelos</h2>
+    <h3>1. Estructura general de un modelo de PL</h3>
+    <p>Una forma general de un modelo lineal de maximización es:</p>
+    <div class="math-block">
+      <div class="math-title">Modelo general de maximización</div>
+      <div class="math-line"><span class="op">Maximizar</span> <span class="var">Z</span> = <span class="coef">c</span><sub>1</sub><span class="var">x</span><sub>1</sub> + <span class="coef">c</span><sub>2</sub><span class="var">x</span><sub>2</sub> + … + <span class="coef">c</span><sub>n</sub><span class="var">x</span><sub>n</sub></div>
+      <div class="math-line"><span class="op">sujeto a</span></div>
+      <div class="math-line"><span class="coef">a</span><sub>11</sub><span class="var">x</span><sub>1</sub> + <span class="coef">a</span><sub>12</sub><span class="var">x</span><sub>2</sub> + … + <span class="coef">a</span><sub>1n</sub><span class="var">x</span><sub>n</sub> ≤ <span class="rhs">b</span><sub>1</sub></div>
+      <div class="math-line"><span class="coef">a</span><sub>21</sub><span class="var">x</span><sub>1</sub> + <span class="coef">a</span><sub>22</sub><span class="var">x</span><sub>2</sub> + … + <span class="coef">a</span><sub>2n</sub><span class="var">x</span><sub>n</sub> ≤ <span class="rhs">b</span><sub>2</sub></div>
+      <div class="math-line">⋮</div>
+      <div class="math-line"><span class="var">x</span><sub>j</sub> ≥ 0, para todo <span class="idx">j</span> = 1, …, <span class="idx">n</span></div>
+    </div>
+    <p>En un problema de minimización se reemplaza “Maximizar” por “Minimizar”. Las restricciones pueden ser de tipo <span class="math-inline">≤</span>, <span class="math-inline">≥</span> o <span class="math-inline">=</span>, según el significado del problema.</p>
+
+    <h3>2. Variables de decisión</h3>
+    <p>Las variables de decisión son las incógnitas que el modelo debe determinar. No son datos del problema: son decisiones. Una variable bien definida debe incluir nombre, unidad, alcance y periodo de tiempo.</p>
+    <div class="callout warning"><strong>Ejemplo correcto:</strong> <span class="math-inline">x<sub>1</sub></span> = número de mesas producidas por semana. <br><strong>Ejemplo débil:</strong> <span class="math-inline">x</span> = mesas.</div>
+
+    <h3>3. Parámetros</h3>
+    <p>Los parámetros son datos conocidos: costos unitarios, consumos de recurso, disponibilidades, demandas, rendimientos, precios, límites de presupuesto o requerimientos mínimos. Deben tratarse como constantes.</p>
+
+    <h3>4. Función objetivo</h3>
+    <p>La función objetivo traduce el criterio de decisión. Si se desea maximizar utilidad, cada variable debe multiplicarse por la utilidad unitaria. Si se desea minimizar costo, cada variable debe multiplicarse por su costo unitario.</p>
+    <div class="math-block compact-math">
+      <div class="math-line"><span class="op">Maximizar utilidad:</span> Z = Σ utilidad unitaria × cantidad decidida</div>
+      <div class="math-line"><span class="op">Minimizar costo:</span> C = Σ costo unitario × cantidad decidida</div>
+    </div>
+
+    <h3>5. Restricciones</h3>
+    <p>Las restricciones son las reglas que limitan o exigen ciertos valores. Cada restricción debe leerse como una frase lógica:</p>
+    <ul class="step-list">
+      <li><strong>Capacidad:</strong> consumo total ≤ disponibilidad.</li>
+      <li><strong>Demanda mínima:</strong> producción o cobertura total ≥ requerimiento.</li>
+      <li><strong>Balance:</strong> entradas − salidas = cambio de inventario.</li>
+      <li><strong>Proporción:</strong> parte de la mezcla respecto al total cumple un porcentaje.</li>
+      <li><strong>Asignación:</strong> cada tarea se asigna exactamente una vez.</li>
+      <li><strong>Presupuesto:</strong> gasto total ≤ presupuesto disponible.</li>
+    </ul>
+
+    <h3>6. Dominio</h3>
+    <p>El dominio indica qué valores puede tomar cada variable. En PL continua, lo usual es <span class="math-inline">x<sub>j</sub> ≥ 0</span>. Cuando se requieren unidades indivisibles, se habla de programación lineal entera o mixta; aun así, la formulación lineal básica sirve como punto de partida.</p>
+
+    <h3>7. Linealidad</h3>
+    <p>Un modelo es lineal cuando las variables aparecen solo multiplicadas por constantes y no hay productos entre variables, potencias, raíces, cocientes con variables ni funciones no lineales.</p>
+    <div class="solution-grid">
+      <div class="callout"><strong>Lineal:</strong><br><span class="math-inline">3x<sub>1</sub> + 2x<sub>2</sub> ≤ 100</span></div>
+      <div class="callout warning"><strong>No lineal:</strong><br><span class="math-inline">x<sub>1</sub>x<sub>2</sub> ≤ 100</span>, <span class="math-inline">x<sub>1</sub><sup>2</sup> ≤ 50</span></div>
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>Guía de aprendizaje paso a paso</h2>
+    <ol class="step-list">
+      <li><strong>Leer el contexto completo.</strong> Antes de escribir ecuaciones, identifica qué organización, proceso o sistema se está modelando. Pregunta: ¿producción, mezcla, transporte, dieta, inversión, turnos o asignación?</li>
+      <li><strong>Separar datos de decisiones.</strong> Los datos son números conocidos; las decisiones son cantidades por determinar. Una forma útil es subrayar verbos como producir, enviar, comprar, invertir, asignar, contratar o mezclar.</li>
+      <li><strong>Definir variables con precisión.</strong> Escribe cada variable con unidad y periodo. Evita variables ambiguas. Si hay muchos índices, define conjuntos: plantas, mercados, alimentos, activos, turnos o tareas.</li>
+      <li><strong>Elegir el criterio de optimización.</strong> Decide si la función objetivo maximiza o minimiza. Verifica que todos sus términos estén en la misma unidad: dinero, horas, toneladas, impactos, riesgo o desperdicio.</li>
+      <li><strong>Construir la función objetivo.</strong> Multiplica cada variable por su contribución unitaria. Si una variable representa proporción, el coeficiente debe interpretarse como contribución por unidad de proporción del total.</li>
+      <li><strong>Formular restricciones de recursos.</strong> Para cada recurso limitado, calcula consumo total y compáralo con disponibilidad. Estructura típica: <span class="math-inline">Σ consumo unitario × cantidad ≤ disponibilidad</span>.</li>
+      <li><strong>Formular restricciones de requerimiento.</strong> Si se debe cumplir una meta mínima, usa <span class="math-inline">≥</span>. Ejemplos: proteína mínima, demanda mínima, cobertura mínima o inversión mínima.</li>
+      <li><strong>Formular restricciones de balance.</strong> En transporte e inventarios, los balances son esenciales. Una demanda debe cubrirse exactamente o al menos, según el caso.</li>
+      <li><strong>Agregar dominio y supuestos.</strong> Incluye no negatividad, continuidad o integralidad. Declara supuestos como divisibilidad, certidumbre de datos, linealidad y horizonte de planeación.</li>
+      <li><strong>Validar el modelo.</strong> Revisa que cada dato importante del enunciado aparezca en alguna ecuación o esté justificado. Verifica unidades, signos, sentido de desigualdades y consistencia del resultado.</li>
+    </ol>
+  </section>
+
+  <section class="learning-block">
+    <h2>Buenas prácticas y errores comunes explicados</h2>
+    <div class="solution-grid">
+      <div class="callout"><strong>Buena práctica 1: nombrar variables con significado.</strong><br>Una variable debe ser entendible sin mirar la ecuación. Use <span class="math-inline">x<sub>A</sub></span> para producto A o <span class="math-inline">x<sub>ij</sub></span> para flujo desde origen <span class="math-inline">i</span> hacia destino <span class="math-inline">j</span>.</div>
+      <div class="callout"><strong>Buena práctica 2: cuidar unidades.</strong><br>Si el lado izquierdo está en horas, el lado derecho también debe estar en horas. Si la FO está en pesos, cada término debe representar pesos.</div>
+      <div class="callout"><strong>Buena práctica 3: distinguir datos y variables.</strong><br>La demanda, el costo y la disponibilidad suelen ser parámetros; la producción, envío o inversión suele ser decisión.</div>
+      <div class="callout"><strong>Buena práctica 4: usar índices.</strong><br>En transporte, asignación y dietas con muchos elementos, los índices evitan escribir modelos desordenados y facilitan codificación en Solver o Python.</div>
+      <div class="callout warning"><strong>Error común 1: invertir el signo.</strong><br>Una capacidad se modela normalmente como <span class="math-inline">≤</span>; un requerimiento mínimo como <span class="math-inline">≥</span>; un balance exacto como <span class="math-inline">=</span>.</div>
+      <div class="callout warning"><strong>Error común 2: olvidar no negatividad.</strong><br>Sin <span class="math-inline">x ≥ 0</span>, el modelo podría recomendar producir, enviar o comprar cantidades negativas.</div>
+      <div class="callout warning"><strong>Error común 3: modelar porcentajes mal.</strong><br>Un 18% debe escribirse como 0.18 si se trabaja en proporciones. En mezclas, el nutriente ponderado suele ser <span class="math-inline">Σ contenido × proporción</span>.</div>
+      <div class="callout warning"><strong>Error común 4: confundir solución con formulación.</strong><br>Formular no es resolver. Primero se construye el modelo; luego se usa gráfico, simplex, Solver o Python para obtener valores óptimos.</div>
+    </div>
+  </section>
+
+  <section class="learning-block">
+    <h2>10 ejemplos desarrollados</h2>
+    <p>Los siguientes ejemplos cubren producción, mezcla, dieta, transporte, asignación, publicidad, cartera, corte, turnos y localización. Cada uno se presenta con planteamiento detallado, modelo matemático y resolución paso a paso.</p>
+    <ol class="toc-list">
+      <li><a href="#PL-SEC1-EJ01">PL-SEC1-EJ01 — Producción de mesas y sillas</a></li>
+      <li><a href="#PL-SEC1-EJ02">PL-SEC1-EJ02 — Mezcla de alimentos balanceados</a></li>
+      <li><a href="#PL-SEC1-EJ03">PL-SEC1-EJ03 — Dieta mínima para cafetería</a></li>
+      <li><a href="#PL-SEC1-EJ04">PL-SEC1-EJ04 — Transporte simple desde plantas a mercados</a></li>
+      <li><a href="#PL-SEC1-EJ05">PL-SEC1-EJ05 — Asignación simple de tareas</a></li>
+      <li><a href="#PL-SEC1-EJ06">PL-SEC1-EJ06 — Plan de publicidad local</a></li>
+      <li><a href="#PL-SEC1-EJ07">PL-SEC1-EJ07 — Cartera básica de inversión</a></li>
+      <li><a href="#PL-SEC1-EJ08">PL-SEC1-EJ08 — Corte de rollos simplificado</a></li>
+      <li><a href="#PL-SEC1-EJ09">PL-SEC1-EJ09 — Planeación de turnos simplificada</a></li>
+      <li><a href="#PL-SEC1-EJ10">PL-SEC1-EJ10 — Localización simplificada de centros</a></li>
+    </ol>
+  </section>
+
+  <article class="example-detail" id="PL-SEC1-EJ01">
+    <span class="badge">PL-SEC1-EJ01</span>
+    <h3>Producción de mesas y sillas</h3>
+    <p><strong>Planteamiento.</strong> Una carpintería universitaria fabrica mesas de estudio y sillas. Durante una semana dispone de tres recursos: carpintería, pintura y empaque. El gerente debe decidir cuántas mesas y cuántas sillas fabricar para maximizar la utilidad semanal. Además, el área comercial estima que no se venderán más de 18 mesas ni más de 30 sillas durante la semana.</p>
+    <table class="data-table mini-table"><thead><tr><th>Producto</th><th>Utilidad</th><th>Carpintería h/u</th><th>Pintura h/u</th><th>Empaque h/u</th><th>Demanda máxima</th></tr></thead><tbody><tr><td>Mesa</td><td>50</td><td>4</td><td>2</td><td>1</td><td>18</td></tr><tr><td>Silla</td><td>30</td><td>2</td><td>1</td><td>0.5</td><td>30</td></tr><tr><td>Disponibilidad</td><td>—</td><td>80</td><td>40</td><td>16</td><td>—</td></tr></tbody></table>
+    <h4>Paso 1. Variables</h4><p><span class="math-inline">x<sub>1</sub></span> = mesas producidas por semana; <span class="math-inline">x<sub>2</sub></span> = sillas producidas por semana.</p>
+    <h4>Paso 2. Modelo matemático</h4>
+    <div class="math-block"><div class="math-title">Modelo de producción</div><div class="math-line"><span class="op">Maximizar</span> Z = 50x<sub>1</sub> + 30x<sub>2</sub></div><div class="math-line"><span class="op">sujeto a</span></div><div class="math-line">4x<sub>1</sub> + 2x<sub>2</sub> ≤ 80 <span class="note">carpintería</span></div><div class="math-line">2x<sub>1</sub> + x<sub>2</sub> ≤ 40 <span class="note">pintura</span></div><div class="math-line">x<sub>1</sub> + 0.5x<sub>2</sub> ≤ 16 <span class="note">empaque</span></div><div class="math-line">x<sub>1</sub> ≤ 18, &nbsp; x<sub>2</sub> ≤ 30 <span class="note">demanda máxima</span></div><div class="math-line">x<sub>1</sub>, x<sub>2</sub> ≥ 0</div></div>
+    <h4>Paso 3. Resolución e interpretación</h4><p>Al comparar recursos se observa que empaque es más restrictivo: <span class="math-inline">x<sub>1</sub> + 0.5x<sub>2</sub> ≤ 16</span>. Dado que una silla genera más utilidad por hora de empaque que una mesa, conviene llevar sillas hasta su demanda máxima y usar el empaque restante en mesas.</p>
+    <div class="math-block compact-math"><div class="math-line">Si x<sub>2</sub> = 30, entonces x<sub>1</sub> + 0.5(30) ≤ 16 ⇒ x<sub>1</sub> ≤ 1</div><div class="math-line">Solución: x<sub>1</sub> = 1, x<sub>2</sub> = 30</div><div class="math-line">Z = 50(1) + 30(30) = 950</div></div>
+    <h4>Verificación</h4><p>Carpintería: <span class="math-inline">4(1)+2(30)=64≤80</span>. Pintura: <span class="math-inline">2(1)+30=32≤40</span>. Empaque: <span class="math-inline">1+0.5(30)=16</span>. La restricción activa es empaque.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ02">
+    <span class="badge">PL-SEC1-EJ02</span>
+    <h3>Mezcla de alimentos balanceados</h3>
+    <p><strong>Planteamiento.</strong> Una planta de alimentos para aves debe preparar una tonelada de alimento balanceado usando maíz, soya y afrecho. La mezcla debe cumplir un mínimo de proteína, un máximo de fibra y un mínimo de energía. El objetivo es minimizar el costo por tonelada.</p>
+    <table class="data-table mini-table"><thead><tr><th>Ingrediente</th><th>Costo USD/t</th><th>Proteína</th><th>Fibra</th><th>Energía kcal/kg</th></tr></thead><tbody><tr><td>Maíz</td><td>240</td><td>8%</td><td>2%</td><td>3300</td></tr><tr><td>Soya</td><td>420</td><td>44%</td><td>7%</td><td>2800</td></tr><tr><td>Afrecho</td><td>180</td><td>15%</td><td>12%</td><td>1800</td></tr><tr><td>Requerimiento</td><td>—</td><td>≥18%</td><td>≤6%</td><td>≥2600</td></tr></tbody></table>
+    <h4>Variables y modelo</h4><p><span class="math-inline">x<sub>1</sub></span>, <span class="math-inline">x<sub>2</sub></span>, <span class="math-inline">x<sub>3</sub></span> = toneladas de maíz, soya y afrecho dentro de una tonelada de mezcla.</p>
+    <div class="math-block"><div class="math-title">Modelo de mezcla</div><div class="math-line"><span class="op">Minimizar</span> C = 240x<sub>1</sub> + 420x<sub>2</sub> + 180x<sub>3</sub></div><div class="math-line">x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> = 1</div><div class="math-line">0.08x<sub>1</sub> + 0.44x<sub>2</sub> + 0.15x<sub>3</sub> ≥ 0.18</div><div class="math-line">0.02x<sub>1</sub> + 0.07x<sub>2</sub> + 0.12x<sub>3</sub> ≤ 0.06</div><div class="math-line">3300x<sub>1</sub> + 2800x<sub>2</sub> + 1800x<sub>3</sub> ≥ 2600</div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</div></div>
+    <h4>Resolución paso a paso</h4><ol class="step-list"><li>La primera restricción garantiza que la mezcla sea exactamente una tonelada.</li><li>Las restricciones nutricionales son promedios ponderados de cada ingrediente.</li><li>Al resolver el sistema lineal con las restricciones activas de proteína, fibra y suma, se obtiene una mezcla económica que respeta energía.</li></ol>
+    <div class="math-block compact-math"><div class="math-line">x<sub>1</sub> = 0.4892, &nbsp; x<sub>2</sub> = 0.2215, &nbsp; x<sub>3</sub> = 0.2892</div><div class="math-line">C = 262.52 USD/t</div></div>
+    <h4>Interpretación y verificación</h4><p>La mezcla usa soya para elevar proteína, maíz para energía y afrecho por bajo costo, limitado por la fibra. Proteína = 18%, fibra = 6% y energía ≈ 2670.8 kcal/kg.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ03">
+    <span class="badge">PL-SEC1-EJ03</span>
+    <h3>Dieta mínima para cafetería</h3>
+    <p><strong>Planteamiento.</strong> Una cafetería institucional desea diseñar una ración diaria de bajo costo usando arroz, pollo y fríjol. La ración debe aportar al menos 35 gramos de proteína y 700 calorías. Por disponibilidad de cocina, no se pueden usar más de 2 porciones de pollo.</p>
+    <table class="data-table mini-table"><thead><tr><th>Alimento</th><th>Costo por porción</th><th>Proteína g</th><th>Calorías</th></tr></thead><tbody><tr><td>Arroz</td><td>0.40</td><td>4</td><td>200</td></tr><tr><td>Pollo</td><td>1.20</td><td>25</td><td>180</td></tr><tr><td>Fríjol</td><td>0.70</td><td>12</td><td>150</td></tr></tbody></table>
+    <h4>Variables y modelo</h4><p><span class="math-inline">x<sub>1</sub></span> = porciones de arroz; <span class="math-inline">x<sub>2</sub></span> = porciones de pollo; <span class="math-inline">x<sub>3</sub></span> = porciones de fríjol.</p>
+    <div class="math-block"><div class="math-title">Modelo de dieta</div><div class="math-line"><span class="op">Minimizar</span> C = 0.40x<sub>1</sub> + 1.20x<sub>2</sub> + 0.70x<sub>3</sub></div><div class="math-line">4x<sub>1</sub> + 25x<sub>2</sub> + 12x<sub>3</sub> ≥ 35 <span class="note">proteína</span></div><div class="math-line">200x<sub>1</sub> + 180x<sub>2</sub> + 150x<sub>3</sub> ≥ 700 <span class="note">calorías</span></div><div class="math-line">x<sub>2</sub> ≤ 2</div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</div></div>
+    <h4>Resolución paso a paso</h4><ol class="step-list"><li>El arroz aporta calorías baratas, pero poca proteína.</li><li>El pollo aporta mucha proteína, pero es más costoso.</li><li>El óptimo continuo equilibra arroz y pollo; el fríjol no entra porque, con estos datos, no mejora el costo frente a la combinación arroz-pollo.</li></ol>
+    <div class="math-block compact-math"><div class="math-line">x<sub>1</sub> = 2.6168, &nbsp; x<sub>2</sub> = 0.9813, &nbsp; x<sub>3</sub> = 0</div><div class="math-line">C = 2.2243</div></div>
+    <h4>Verificación</h4><p>Proteína: <span class="math-inline">4(2.6168)+25(0.9813)=35</span>. Calorías: <span class="math-inline">200(2.6168)+180(0.9813)=700</span>. Ambas restricciones nutricionales quedan activas.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ04">
+    <span class="badge">PL-SEC1-EJ04</span>
+    <h3>Transporte simple desde plantas a mercados</h3>
+    <p><strong>Planteamiento.</strong> Una empresa despacha un producto desde dos plantas hacia tres ciudades. Cada planta tiene una capacidad semanal y cada ciudad tiene una demanda que debe cubrirse exactamente. El objetivo es minimizar el costo total de transporte.</p>
+    <table class="data-table mini-table"><thead><tr><th>Origen/Destino</th><th>Ciudad 1</th><th>Ciudad 2</th><th>Ciudad 3</th><th>Oferta</th></tr></thead><tbody><tr><td>Planta A</td><td>6</td><td>8</td><td>10</td><td>120</td></tr><tr><td>Planta B</td><td>7</td><td>5</td><td>9</td><td>100</td></tr><tr><td>Demanda</td><td>80</td><td>90</td><td>50</td><td>220</td></tr></tbody></table>
+    <h4>Variables y modelo</h4><p><span class="math-inline">x<sub>ij</sub></span> = unidades enviadas desde planta <span class="math-inline">i</span> hacia ciudad <span class="math-inline">j</span>.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Minimizar</span> C = 6x<sub>A1</sub> + 8x<sub>A2</sub> + 10x<sub>A3</sub> + 7x<sub>B1</sub> + 5x<sub>B2</sub> + 9x<sub>B3</sub></div><div class="math-line">x<sub>A1</sub> + x<sub>A2</sub> + x<sub>A3</sub> ≤ 120</div><div class="math-line">x<sub>B1</sub> + x<sub>B2</sub> + x<sub>B3</sub> ≤ 100</div><div class="math-line">x<sub>A1</sub> + x<sub>B1</sub> = 80</div><div class="math-line">x<sub>A2</sub> + x<sub>B2</sub> = 90</div><div class="math-line">x<sub>A3</sub> + x<sub>B3</sub> = 50</div><div class="math-line">x<sub>ij</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>Ciudad 2 debe abastecerse preferentemente desde B por su bajo costo. Ciudad 1 es más barata desde A. La demanda restante de Ciudad 3 se reparte respetando las capacidades.</p>
+    <div class="math-block compact-math"><div class="math-line">x<sub>A1</sub>=80, x<sub>A2</sub>=0, x<sub>A3</sub>=40, x<sub>B1</sub>=0, x<sub>B2</sub>=90, x<sub>B3</sub>=10</div><div class="math-line">C = 80(6)+40(10)+90(5)+10(9)=1420</div></div>
+    <h4>Verificación</h4><p>Planta A envía 120 y Planta B envía 100. Todas las demandas se satisfacen exactamente.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ05">
+    <span class="badge">PL-SEC1-EJ05</span>
+    <h3>Asignación simple de tareas</h3>
+    <p><strong>Planteamiento.</strong> Una firma consultora debe asignar tres analistas a tres tareas. Cada analista puede realizar una sola tarea y cada tarea debe quedar asignada exactamente a un analista. El objetivo es minimizar el tiempo total estimado.</p>
+    <table class="data-table mini-table"><thead><tr><th>Analista/Tarea</th><th>T1</th><th>T2</th><th>T3</th></tr></thead><tbody><tr><td>A1</td><td>8</td><td>6</td><td>9</td></tr><tr><td>A2</td><td>7</td><td>5</td><td>8</td></tr><tr><td>A3</td><td>6</td><td>7</td><td>4</td></tr></tbody></table>
+    <h4>Variables y modelo</h4><p><span class="math-inline">x<sub>ij</sub>=1</span> si el analista <span class="math-inline">i</span> se asigna a la tarea <span class="math-inline">j</span>; <span class="math-inline">0</span> en caso contrario.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Minimizar</span> T = 8x<sub>11</sub>+6x<sub>12</sub>+9x<sub>13</sub>+7x<sub>21</sub>+5x<sub>22</sub>+8x<sub>23</sub>+6x<sub>31</sub>+7x<sub>32</sub>+4x<sub>33</sub></div><div class="math-line">x<sub>i1</sub> + x<sub>i2</sub> + x<sub>i3</sub> = 1, &nbsp; para cada analista i</div><div class="math-line">x<sub>1j</sub> + x<sub>2j</sub> + x<sub>3j</sub> = 1, &nbsp; para cada tarea j</div><div class="math-line">x<sub>ij</sub> ∈ {0,1}</div></div>
+    <h4>Resolución</h4><p>Se comparan combinaciones factibles o se resuelve como modelo de asignación. La mejor asignación es A1 a T2, A2 a T1 y A3 a T3.</p><div class="math-block compact-math"><div class="math-line">T = 6 + 7 + 4 = 17</div></div>
+    <p><strong>Nota didáctica:</strong> aunque el dominio binario convierte el problema en entero, su relajación lineal suele entregar solución entera por la estructura de asignación.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ06">
+    <span class="badge">PL-SEC1-EJ06</span>
+    <h3>Plan de publicidad local</h3>
+    <p><strong>Planteamiento.</strong> Una empresa minorista debe decidir cuántos anuncios comprar en radio, prensa digital y redes sociales para maximizar impactos ponderados. Tiene un presupuesto limitado, límites máximos por canal y una presencia mínima en radio para mantener reconocimiento de marca.</p>
+    <table class="data-table mini-table"><thead><tr><th>Medio</th><th>Costo</th><th>Impactos ponderados</th><th>Máximo</th></tr></thead><tbody><tr><td>Radio</td><td>500</td><td>4200</td><td>8</td></tr><tr><td>Prensa digital</td><td>350</td><td>2600</td><td>10</td></tr><tr><td>Redes</td><td>200</td><td>1800</td><td>20</td></tr></tbody></table>
+    <h4>Modelo</h4><p><span class="math-inline">x<sub>1</sub></span> = anuncios en radio; <span class="math-inline">x<sub>2</sub></span> = anuncios en prensa; <span class="math-inline">x<sub>3</sub></span> = anuncios en redes.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Maximizar</span> I = 4200x<sub>1</sub> + 2600x<sub>2</sub> + 1800x<sub>3</sub></div><div class="math-line">500x<sub>1</sub> + 350x<sub>2</sub> + 200x<sub>3</sub> ≤ 6000</div><div class="math-line">2 ≤ x<sub>1</sub> ≤ 8</div><div class="math-line">x<sub>2</sub> ≤ 10, &nbsp; x<sub>3</sub> ≤ 20</div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>Se calcula eficiencia de impacto por unidad monetaria: radio 8.4, prensa 7.43 y redes 9. Por eso redes se usan primero hasta su máximo; luego se cumple radio mínimo y se usa el presupuesto restante en radio.</p><div class="math-block compact-math"><div class="math-line">x<sub>1</sub>=4, x<sub>2</sub>=0, x<sub>3</sub>=20</div><div class="math-line">I = 4200(4)+1800(20)=52 800</div><div class="math-line">Costo = 500(4)+200(20)=6000</div></div>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ07">
+    <span class="badge">PL-SEC1-EJ07</span>
+    <h3>Cartera básica de inversión</h3>
+    <p><strong>Planteamiento.</strong> Un fondo universitario debe distribuir su capital entre bonos, acciones y CDT. Se busca maximizar el retorno esperado, pero el riesgo promedio no puede superar 4 unidades. Además, se establecen límites máximos por instrumento para diversificar.</p>
+    <table class="data-table mini-table"><thead><tr><th>Activo</th><th>Retorno esperado</th><th>Riesgo</th><th>Máximo</th></tr></thead><tbody><tr><td>Bonos</td><td>7%</td><td>2</td><td>60%</td></tr><tr><td>Acciones</td><td>13%</td><td>8</td><td>45%</td></tr><tr><td>CDT</td><td>5%</td><td>1</td><td>50%</td></tr></tbody></table>
+    <h4>Modelo</h4><p><span class="math-inline">x<sub>1</sub></span>, <span class="math-inline">x<sub>2</sub></span>, <span class="math-inline">x<sub>3</sub></span> = proporción invertida en bonos, acciones y CDT.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Maximizar</span> R = 0.07x<sub>1</sub> + 0.13x<sub>2</sub> + 0.05x<sub>3</sub></div><div class="math-line">x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> = 1</div><div class="math-line">2x<sub>1</sub> + 8x<sub>2</sub> + x<sub>3</sub> ≤ 4</div><div class="math-line">x<sub>1</sub> ≤ 0.60, &nbsp; x<sub>2</sub> ≤ 0.45, &nbsp; x<sub>3</sub> ≤ 0.50</div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>Las acciones tienen mayor retorno, pero también mayor riesgo. Se invierte lo máximo posible en bonos de retorno intermedio y bajo riesgo, y se incrementan acciones hasta alcanzar el límite de riesgo.</p><div class="math-block compact-math"><div class="math-line">x<sub>1</sub>=0.6000, x<sub>2</sub>=0.3429, x<sub>3</sub>=0.0571</div><div class="math-line">R = 8.9429% anual esperado</div><div class="math-line">Riesgo = 2(0.60)+8(0.3429)+0.0571 = 4</div></div>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ08">
+    <span class="badge">PL-SEC1-EJ08</span>
+    <h3>Corte de rollos simplificado</h3>
+    <p><strong>Planteamiento.</strong> Una empresa corta rollos de 100 cm para obtener piezas de 45 cm y 30 cm. Se han definido tres patrones de corte factibles. El objetivo es satisfacer la demanda usando el menor número de rollos.</p>
+    <table class="data-table mini-table"><thead><tr><th>Patrón</th><th>Piezas 45 cm</th><th>Piezas 30 cm</th><th>Desperdicio</th></tr></thead><tbody><tr><td>P1</td><td>2</td><td>0</td><td>10</td></tr><tr><td>P2</td><td>1</td><td>1</td><td>25</td></tr><tr><td>P3</td><td>0</td><td>3</td><td>10</td></tr><tr><td>Demanda</td><td>40</td><td>60</td><td>—</td></tr></tbody></table>
+    <h4>Modelo</h4><p><span class="math-inline">x<sub>1</sub></span>, <span class="math-inline">x<sub>2</sub></span>, <span class="math-inline">x<sub>3</sub></span> = número de rollos cortados con los patrones P1, P2 y P3.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Minimizar</span> N = x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub></div><div class="math-line">2x<sub>1</sub> + x<sub>2</sub> ≥ 40</div><div class="math-line">x<sub>2</sub> + 3x<sub>3</sub> ≥ 60</div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>El patrón P2 produce una pieza de cada tipo, pero genera más desperdicio. P1 y P3 satisfacen exactamente las demandas con bajo desperdicio.</p><div class="math-block compact-math"><div class="math-line">x<sub>1</sub>=20, x<sub>2</sub>=0, x<sub>3</sub>=20</div><div class="math-line">N=40 rollos</div></div><p>En la práctica, las variables deben ser enteras porque no se puede cortar una fracción de rollo.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ09">
+    <span class="badge">PL-SEC1-EJ09</span>
+    <h3>Planeación de turnos simplificada</h3>
+    <p><strong>Planteamiento.</strong> Un centro de atención opera en cuatro franjas: mañana, mediodía, tarde y noche. Cada operador asignado a un tipo de turno cubre dos franjas consecutivas. Se desea cubrir la demanda mínima de cada franja con el menor número de operadores.</p>
+    <table class="data-table mini-table"><thead><tr><th>Turno</th><th>Cubre</th></tr></thead><tbody><tr><td>T1</td><td>Mañana y mediodía</td></tr><tr><td>T2</td><td>Mediodía y tarde</td></tr><tr><td>T3</td><td>Tarde y noche</td></tr><tr><td>T4</td><td>Noche y mañana</td></tr><tr><td>Demanda</td><td>M=8, D=12, T=10, N=6</td></tr></tbody></table>
+    <h4>Modelo</h4><p><span class="math-inline">x<sub>k</sub></span> = operadores asignados al turno <span class="math-inline">k</span>.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Minimizar</span> W = x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> + x<sub>4</sub></div><div class="math-line">x<sub>1</sub> + x<sub>4</sub> ≥ 8 <span class="note">mañana</span></div><div class="math-line">x<sub>1</sub> + x<sub>2</sub> ≥ 12 <span class="note">mediodía</span></div><div class="math-line">x<sub>2</sub> + x<sub>3</sub> ≥ 10 <span class="note">tarde</span></div><div class="math-line">x<sub>3</sub> + x<sub>4</sub> ≥ 6 <span class="note">noche</span></div><div class="math-line">x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, x<sub>4</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>Una solución óptima continua e implementable es:</p><div class="math-block compact-math"><div class="math-line">x<sub>1</sub>=2, x<sub>2</sub>=10, x<sub>3</sub>=0, x<sub>4</sub>=6</div><div class="math-line">W=18 operadores</div></div><p>Verificación: mañana <span class="math-inline">2+6=8</span>, mediodía <span class="math-inline">2+10=12</span>, tarde <span class="math-inline">10+0=10</span>, noche <span class="math-inline">0+6=6</span>.</p>
+  </article>
+
+  <article class="example-detail" id="PL-SEC1-EJ10">
+    <span class="badge">PL-SEC1-EJ10</span>
+    <h3>Localización simplificada de centros</h3>
+    <p><strong>Planteamiento.</strong> Una empresa evalúa la operación de dos microcentros de distribución ya disponibles para atender tres zonas urbanas. En esta versión simplificada no se consideran costos fijos de apertura; solo se decide cuánto enviar desde cada centro hacia cada zona para minimizar el costo de distribución.</p>
+    <table class="data-table mini-table"><thead><tr><th>Centro/Zona</th><th>Z1</th><th>Z2</th><th>Z3</th><th>Capacidad</th></tr></thead><tbody><tr><td>C1</td><td>4</td><td>6</td><td>9</td><td>100</td></tr><tr><td>C2</td><td>5</td><td>4</td><td>7</td><td>90</td></tr><tr><td>Demanda</td><td>60</td><td>70</td><td>40</td><td>170</td></tr></tbody></table>
+    <h4>Modelo</h4><p><span class="math-inline">x<sub>ij</sub></span> = unidades enviadas desde centro <span class="math-inline">i</span> hacia zona <span class="math-inline">j</span>.</p>
+    <div class="math-block"><div class="math-line"><span class="op">Minimizar</span> C = 4x<sub>11</sub> + 6x<sub>12</sub> + 9x<sub>13</sub> + 5x<sub>21</sub> + 4x<sub>22</sub> + 7x<sub>23</sub></div><div class="math-line">x<sub>11</sub>+x<sub>12</sub>+x<sub>13</sub> ≤ 100</div><div class="math-line">x<sub>21</sub>+x<sub>22</sub>+x<sub>23</sub> ≤ 90</div><div class="math-line">x<sub>11</sub>+x<sub>21</sub>=60</div><div class="math-line">x<sub>12</sub>+x<sub>22</sub>=70</div><div class="math-line">x<sub>13</sub>+x<sub>23</sub>=40</div><div class="math-line">x<sub>ij</sub> ≥ 0</div></div>
+    <h4>Resolución</h4><p>Zona 1 es más barata desde C1, Zona 2 desde C2 y Zona 3 desde C2. Sin embargo, C2 tiene capacidad 90 y no puede cubrir simultáneamente Z2 y Z3 en su totalidad, por lo que C1 cubre Z3 restante.</p><div class="math-block compact-math"><div class="math-line">x<sub>11</sub>=60, x<sub>12</sub>=0, x<sub>13</sub>=40, x<sub>21</sub>=0, x<sub>22</sub>=70, x<sub>23</sub>=0</div><div class="math-line">C = 60(4)+40(9)+70(4)=880</div></div>
+    <h4>Verificación</h4><p>C1 usa 100 unidades de capacidad; C2 usa 70. Las tres demandas se cubren exactamente. En una versión más avanzada, se agregarían variables binarias de apertura y costos fijos.</p>
+  </article>
+
+  <section class="learning-block">
+    <h2>Cierre de la sección</h2>
+    <p>La formulación es una habilidad central de Investigación de Operaciones. Antes de resolver cualquier modelo, verifica que la estructura matemática represente con fidelidad la situación real. Un buen modelo debe ser claro, trazable, dimensionalmente consistente, lineal, verificable y defendible ante un decisor.</p>
+  </section>
+</main>
+</body>
+</html>
