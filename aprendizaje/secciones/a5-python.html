@@ -1,0 +1,100 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A5. Python para Programación Lineal</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body><header class="site-header"><a class="logo" href="../index.html">PL Lab</a><nav aria-label="Navegación principal"><a href="../index.html">Inicio</a><a href="../ruta.html">Ruta</a><a href="a1-formulacion.html">Secciones</a><a href="../ejercicios/index.html">Ejercicios</a><a href="../quices/index.html">Quices</a><a href="../tutor/tutor.html">Tutor</a></nav></header><main class="container">
+<h1>A5. Resolver Programación Lineal con Python</h1><nav class="section-nav"><a href="a1-formulacion.html">A1 Formulación</a><a href="a2-grafico.html">A2 Gráfico</a><a href="a3-simplex.html">A3 Simplex</a><a href="a4-solver.html">A4 Solver</a><a href="a5-python.html">A5 Python</a><a href="a6-sensibilidad.html">A6 Sensibilidad</a></nav>
+<p class="muted"><strong>Competencia:</strong> implementar, resolver, validar y documentar modelos de PL en Python usando PuLP como herramienta principal y scipy.optimize.linprog como alternativa matricial.</p>
+<section class="learning-block"><h2>Teoría ampliada: del modelo matemático al código</h2><p>Programar un modelo de Programación Lineal en Python no consiste en “traducir ciegamente” ecuaciones. Primero se debe tener un modelo matemático correcto; luego se implementan conjuntos, parámetros, variables, función objetivo y restricciones. Python es especialmente útil cuando el modelo tiene muchos datos, múltiples índices o debe repetirse para escenarios.</p><div class="solution-grid"><div class="callout"><strong>PuLP:</strong> recomendado para aprendizaje por su sintaxis declarativa: variables, objetivo y restricciones se parecen al modelo matemático.</div><div class="callout"><strong>scipy.optimize.linprog:</strong> alternativa matricial útil para entender la forma estándar computacional: vectores c, matrices A y vector b.</div></div><h3>Instalación sugerida</h3><pre class="code-block">pip install pulp scipy pandas openpyxl</pre></section>
+<section class="learning-block"><h2>Guía detallada paso a paso</h2><ol class="step-list"><li><strong>Escriba el modelo en papel:</strong> variables, FO, restricciones y dominio.</li><li><strong>Identifique datos:</strong> coeficientes, capacidades, demandas, costos, beneficios.</li><li><strong>Defina el problema:</strong> <span class="math-inline">LpProblem(nombre, LpMaximize/LpMinimize)</span>.</li><li><strong>Cree variables:</strong> con límites inferiores, superiores y tipo si aplica.</li><li><strong>Agregue función objetivo:</strong> una expresión lineal.</li><li><strong>Agregue restricciones:</strong> una por condición del modelo.</li><li><strong>Resuelva:</strong> con el solver disponible.</li><li><strong>Lea estado:</strong> óptimo, infactible, no acotado u otro.</li><li><strong>Extraiga resultados:</strong> valores de variables, FO, holguras y duales si el solver lo permite.</li><li><strong>Valide:</strong> calcule manualmente consumos y verifique restricciones.</li></ol></section>
+<section class="learning-block"><h2>Plantilla base PuLP</h2><pre class="code-block">import pulp as pl
+
+model = pl.LpProblem("modelo_pl", pl.LpMaximize)
+x = pl.LpVariable("x", lowBound=0)
+y = pl.LpVariable("y", lowBound=0)
+
+model += 40*x + 30*y, "Objetivo"
+model += 2*x + y <= 100, "Maquina"
+model += x + y <= 80, "Ensamble"
+
+status = model.solve(pl.PULP_CBC_CMD(msg=False))
+print(pl.LpStatus[status])
+print(x.varValue, y.varValue, pl.value(model.objective))</pre></section>
+<section class="learning-block"><h2>10 ejemplos desarrollados</h2><ol class="toc-list"><li><a href="#PL-SEC5-EJ01">Producción con PuLP</a></li><li><a href="#PL-SEC5-EJ02">Dieta mínima</a></li><li><a href="#PL-SEC5-EJ03">Mezcla de productos</a></li><li><a href="#PL-SEC5-EJ04">Transporte</a></li><li><a href="#PL-SEC5-EJ05">Publicidad</a></li><li><a href="#PL-SEC5-EJ06">Cartera</a></li><li><a href="#PL-SEC5-EJ07">Turnos</a></li><li><a href="#PL-SEC5-EJ08">PuLP vs linprog</a></li><li><a href="#PL-SEC5-EJ09">Validación automática</a></li><li><a href="#PL-SEC5-EJ10">Exportación a Excel</a></li></ol></section>
+<article class="example-detail" id="PL-SEC5-EJ01"><span class="badge">PL-SEC5-EJ01</span><h3>Producción con PuLP</h3><h4>Modelo</h4><div class="equation">Max Z = 40x + 30y; 2x+y<=100; x+y<=80</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+m=pl.LpProblem('produccion', pl.LpMaximize)
+x=pl.LpVariable('producto_A', lowBound=0); y=pl.LpVariable('producto_B', lowBound=0)
+m += 40*x + 30*y
+m += 2*x + y <= 100, 'maquina'
+m += x + y <= 80, 'ensamble'
+m.solve(pl.PULP_CBC_CMD(msg=False))
+print(pl.LpStatus[m.status], x.varValue, y.varValue, pl.value(m.objective))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>El resultado esperado es x=20, y=60, Z=2600.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ02"><span class="badge">PL-SEC5-EJ02</span><h3>Dieta mínima</h3><h4>Modelo</h4><div class="equation">Min C con alimentos y nutrientes mínimos</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+foods=['A','B']; cost={'A':2,'B':3}; prot={'A':3,'B':2}; cal={'A':100,'B':200}
+m=pl.LpProblem('dieta', pl.LpMinimize)
+x=pl.LpVariable.dicts('porciones', foods, lowBound=0)
+m += pl.lpSum(cost[i]*x[i] for i in foods)
+m += pl.lpSum(prot[i]*x[i] for i in foods) >= 18
+m += pl.lpSum(cal[i]*x[i] for i in foods) >= 900
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>La solución debe cumplir exactamente o superar proteína y calorías al menor costo.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ03"><span class="badge">PL-SEC5-EJ03</span><h3>Mezcla de productos</h3><h4>Modelo</h4><div class="equation">Max margen sujeto a recursos A y B</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+prod=['M1','M2']; margin={'M1':70,'M2':60}
+A={'M1':3,'M2':2}; B={'M1':2,'M2':4}
+m=pl.LpProblem('mezcla', pl.LpMaximize)
+x=pl.LpVariable.dicts('lotes', prod, lowBound=0)
+m += pl.lpSum(margin[p]*x[p] for p in prod)
+m += pl.lpSum(A[p]*x[p] for p in prod) <= 120
+m += pl.lpSum(B[p]*x[p] for p in prod) <= 160
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>Resultado esperado: M1=20, M2=30, margen=3200.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ04"><span class="badge">PL-SEC5-EJ04</span><h3>Transporte</h3><h4>Modelo</h4><div class="equation">Min costo desde plantas a mercados</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+plants=['P1','P2']; markets=['M1','M2','M3']
+supply={'P1':80,'P2':70}; demand={'M1':50,'M2':60,'M3':40}
+cost={('P1','M1'):4,('P1','M2'):6,('P1','M3'):8,('P2','M1'):5,('P2','M2'):4,('P2','M3'):3}
+m=pl.LpProblem('transporte', pl.LpMinimize)
+x=pl.LpVariable.dicts('envio',(plants,markets),lowBound=0)
+m += pl.lpSum(cost[i,j]*x[i][j] for i in plants for j in markets)
+for i in plants: m += pl.lpSum(x[i][j] for j in markets) <= supply[i]
+for j in markets: m += pl.lpSum(x[i][j] for i in plants) >= demand[j]
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>Valide oferta por planta y demanda por mercado.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ05"><span class="badge">PL-SEC5-EJ05</span><h3>Publicidad</h3><h4>Modelo</h4><div class="equation">Max impactos con presupuesto y límites</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+media=['radio','redes','prensa']; reach={'radio':5000,'redes':3000,'prensa':2500}; cost={'radio':800,'redes':400,'prensa':350}
+m=pl.LpProblem('publicidad', pl.LpMaximize)
+x=pl.LpVariable.dicts('anuncios', media, lowBound=0)
+m += pl.lpSum(reach[i]*x[i] for i in media)
+m += pl.lpSum(cost[i]*x[i] for i in media) <= 10000
+m += x['radio'] >= 2; m += x['redes'] <= 15
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>Si los anuncios deben ser enteros, use cat="Integer".</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ06"><span class="badge">PL-SEC5-EJ06</span><h3>Cartera</h3><h4>Modelo</h4><div class="equation">Max retorno con riesgo promedio máximo</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+assets=['acciones','bonos','efectivo']; ret={'acciones':0.12,'bonos':0.07,'efectivo':0.03}; risk={'acciones':0.20,'bonos':0.08,'efectivo':0.01}
+m=pl.LpProblem('cartera', pl.LpMaximize)
+w=pl.LpVariable.dicts('peso', assets, lowBound=0, upBound=0.7)
+m += pl.lpSum(ret[a]*w[a] for a in assets)
+m += pl.lpSum(w[a] for a in assets) == 1
+m += pl.lpSum(risk[a]*w[a] for a in assets) <= 0.10
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>Verifique que los pesos sumen 1.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ07"><span class="badge">PL-SEC5-EJ07</span><h3>Planeación de turnos</h3><h4>Modelo</h4><div class="equation">Min costo cubriendo demanda por franja</div><h4>Código principal</h4><pre class="code-block">import pulp as pl
+shifts=['T1','T2','T3']; periods=['M','T','N']
+cost={'T1':90,'T2':100,'T3':110}; demand={'M':8,'T':10,'N':6}
+cover={('T1','M'):1,('T1','T'):1,('T1','N'):0,('T2','M'):0,('T2','T'):1,('T2','N'):1,('T3','M'):1,('T3','T'):0,('T3','N'):1}
+m=pl.LpProblem('turnos', pl.LpMinimize)
+x=pl.LpVariable.dicts('empleados', shifts, lowBound=0)
+m += pl.lpSum(cost[s]*x[s] for s in shifts)
+for p in periods: m += pl.lpSum(cover[s,p]*x[s] for s in shifts) >= demand[p]
+m.solve(pl.PULP_CBC_CMD(msg=False))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>En aplicaciones reales normalmente se agregan variables enteras.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ08"><span class="badge">PL-SEC5-EJ08</span><h3>PuLP vs linprog</h3><h4>Modelo</h4><div class="equation">Comparación con forma matricial</div><h4>Código principal</h4><pre class="code-block">from scipy.optimize import linprog
+# linprog minimiza; para maximizar 40x+30y usamos c negativo
+c=[-40,-30]
+A_ub=[[2,1],[1,1]]; b_ub=[100,80]
+res=linprog(c,A_ub=A_ub,b_ub=b_ub,bounds=[(0,None),(0,None)],method='highs')
+print(res.x, -res.fun)</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>Debe coincidir con PuLP si el modelo fue traducido correctamente.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ09"><span class="badge">PL-SEC5-EJ09</span><h3>Validación automática</h3><h4>Modelo</h4><div class="equation">Chequeo programático de restricciones</div><h4>Código principal</h4><pre class="code-block">def validar(x,y):
+    checks={
+      'maquina': 2*x+y <= 100 + 1e-6,
+      'ensamble': x+y <= 80 + 1e-6,
+      'no_negatividad': x >= -1e-6 and y >= -1e-6
+    }
+    return checks
+print(validar(20,60))</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>La validación protege contra errores de interpretación o transcripción.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+<article class="example-detail" id="PL-SEC5-EJ10"><span class="badge">PL-SEC5-EJ10</span><h3>Exportación a Excel</h3><h4>Modelo</h4><div class="equation">Guardar resultados con pandas</div><h4>Código principal</h4><pre class="code-block">import pandas as pd
+resultados=pd.DataFrame({'variable':['x','y'],'valor':[20,60]})
+restricciones=pd.DataFrame({'restriccion':['maquina','ensamble'],'uso':[100,80],'rhs':[100,80]})
+with pd.ExcelWriter('resultados_pl.xlsx') as writer:
+    resultados.to_excel(writer,index=False,sheet_name='Variables')
+    restricciones.to_excel(writer,index=False,sheet_name='Restricciones')</pre><h4>Procedimiento detallado</h4><ol class="step-list"><li>Definir conjuntos y parámetros.</li><li>Crear variables no negativas.</li><li>Agregar función objetivo y restricciones.</li><li>Resolver y verificar estado.</li><li>Extraer resultados e interpretar.</li></ol><h4>Interpretación y validación</h4><p>El archivo permite documentar y revisar la solución fuera de Python.</p><div class="python-output">Buenas prácticas: imprimir estado del solver, valores de variables, valor objetivo y consumo de cada restricción.</div></article>
+</main></body></html>
